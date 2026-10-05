@@ -1,0 +1,473 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Asheville Brewery Tour 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800&family=Figtree:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: one narrow column, sticky day chips, a timeline of stop cards per day; a bottom sheet for "Learn more". */
+:root{
+  --bg:#f3f1ec; --surface:#ffffff; --ink:#1f2a2a; --muted:#5d6966; --line:#dcd8cf;
+  --ridge1:#9fb3b0; --ridge2:#6f8a86; --ridge3:#3f5c58;
+  --amber:#b8650f; --amber-soft:#f6e6cf; --leaf:#a3341f; --spruce:#2f5b54; --spruce-soft:#e2ece9;
+  --display:"Big Shoulders Display", "Arial Narrow", Impact, sans-serif;
+  --body:"Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#141a1a; --surface:#1d2525; --ink:#ebe9e3; --muted:#a3aeab; --line:#2e3938;
+  --ridge1:#2b3a39; --ridge2:#344846; --ridge3:#41605b;
+  --amber:#f0a14a; --amber-soft:#3a2a17; --leaf:#e27a5c; --spruce:#8cc2b6; --spruce-soft:#1f3330;
+  color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --bg:#141a1a; --surface:#1d2525; --ink:#ebe9e3; --muted:#a3aeab; --line:#2e3938;
+  --ridge1:#2b3a39; --ridge2:#344846; --ridge3:#41605b;
+  --amber:#f0a14a; --amber-soft:#3a2a17; --leaf:#e27a5c; --spruce:#8cc2b6; --spruce-soft:#1f3330;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.5;margin:0}
+a{color:var(--spruce);text-underline-offset:2px}
+.wrap{max-width:560px;margin:0 auto;padding-inline:16px;padding-block:0 48px}
+
+/* Header */
+.hero{padding-block:28px 0}
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+h1{font-family:var(--display);font-weight:800;font-size:clamp(44px,13vw,64px);line-height:.92;margin:6px 0 8px;letter-spacing:.01em;text-wrap:balance;text-transform:uppercase}
+h1 span{color:var(--amber)}
+.dates{font-weight:600;font-size:15px}
+.ridges{display:block;width:100%;height:auto;margin-top:18px}
+
+/* Day chips */
+.daynav{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);margin-inline:-16px;padding:10px 16px;border-bottom:1px solid var(--line);display:flex;gap:8px;overflow-x:auto;scrollbar-width:none}
+.daynav::-webkit-scrollbar{display:none}
+.daynav a{flex:0 0 auto;text-decoration:none;color:var(--ink);border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 12px;font-size:14px;font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
+.daynav a.today{background:var(--spruce);border-color:var(--spruce);color:var(--surface)}
+
+/* Info blocks */
+section{scroll-margin-top:64px}
+.block{margin-top:24px}
+h2{font-family:var(--display);font-weight:800;text-transform:uppercase;font-size:30px;line-height:1;margin:0;letter-spacing:.02em}
+.sub{color:var(--muted);font-size:14px;margin-top:4px}
+.hotel{margin-top:20px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.hotel b{display:block}
+.hotel small{color:var(--muted)}
+.btn{display:inline-flex;align-items:center;gap:6px;font:600 14px var(--body);border-radius:999px;padding:8px 14px;border:1px solid var(--spruce);color:var(--spruce);background:transparent;text-decoration:none;cursor:pointer;white-space:nowrap}
+.btn:focus-visible,.daynav a:focus-visible,.pip:focus-visible,.check input:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
+
+.rules{margin-top:12px;background:var(--amber-soft);border-radius:14px;padding:16px}
+.rules h3{margin:0 0 8px;font-size:13px;letter-spacing:.12em;text-transform:uppercase}
+.rules ul{margin:0;padding-left:18px;display:grid;gap:6px}
+.limit{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.limit .big{font-family:var(--display);font-weight:800;font-size:48px;line-height:1;color:var(--amber)}
+.limit p{margin:0;font-weight:600;line-height:1.3}
+
+.bring{margin-top:12px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px}
+.bring h3{margin:0 0 10px;font-size:13px;letter-spacing:.12em;text-transform:uppercase}
+.check{display:flex;gap:10px;align-items:flex-start;padding-block:6px;cursor:pointer}
+.check input{width:20px;height:20px;accent-color:var(--spruce);margin:2px 0 0;flex:0 0 auto}
+.check small{display:block;color:var(--muted)}
+
+/* Days */
+.day{margin-top:36px}
+.dayhead{display:flex;align-items:baseline;gap:12px;border-bottom:2px solid var(--ink);padding-bottom:6px}
+.dayhead .dnum{font-family:var(--display);font-weight:800;font-size:48px;line-height:.85;color:var(--amber);font-variant-numeric:tabular-nums}
+.dayhead h2{font-size:28px}
+.dayhead .theme{color:var(--muted);font-size:14px;font-weight:600}
+.note{margin-top:12px;font-size:14px;color:var(--muted);display:flex;gap:8px;align-items:flex-start}
+.note b{color:var(--ink)}
+
+.timeline{list-style:none;margin:14px 0 0;padding:0;position:relative}
+.timeline::before{content:"";position:absolute;left:7px;top:8px;bottom:8px;width:2px;background:var(--line)}
+.stop{position:relative;padding-left:28px;margin-top:14px}
+.stop::before{content:"";position:absolute;left:1px;top:20px;width:14px;height:14px;border-radius:50%;background:var(--bg);border:3px solid var(--spruce)}
+.stop.food::before{border-color:var(--leaf)}
+.stop.addon::before{border-style:dashed;border-color:var(--muted)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+.addon .card{background:transparent;border-style:dashed}
+.meta{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:4px}
+.time{font-weight:700;font-variant-numeric:tabular-nums;font-size:14px}
+.tag{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;border-radius:6px;padding:2px 7px;background:var(--spruce-soft);color:var(--spruce)}
+.tag.res{background:var(--amber-soft);color:var(--amber)}
+.tag.food{background:var(--amber-soft);color:var(--leaf)}
+.tag.opt{background:transparent;border:1px solid var(--line);color:var(--muted)}
+.stop h3{margin:0;font-size:19px;line-height:1.25;text-wrap:balance}
+.blurb{margin:4px 0 0;color:var(--muted);font-size:14px}
+.picks{margin:12px 0 0;padding:0;list-style:none;display:grid;gap:8px}
+.picks-label{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--amber);margin-top:12px}
+.picks li{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:start}
+.glass{width:16px;height:20px;margin-top:2px;flex:0 0 auto}
+.picks b{display:block;font-size:15px;line-height:1.3}
+.picks small{display:block;color:var(--muted);font-size:13px;line-height:1.35}
+.award{display:inline-flex;align-items:center;gap:5px;margin-top:4px;font-size:12px;font-weight:700;color:var(--amber);background:var(--amber-soft);border-radius:6px;padding:2px 8px 2px 6px;line-height:1.3}
+.award svg{width:11px;height:13px;flex:0 0 auto}
+.ideas{margin:8px 0 0;padding:0;list-style:none;display:grid;gap:10px}
+.ideas a{font-weight:700;font-size:15px}
+.ideas .hours{display:inline-block;font-size:12px;font-weight:700;font-variant-numeric:tabular-nums;color:var(--spruce);background:var(--spruce-soft);border-radius:6px;padding:1px 7px;margin-left:4px;white-space:nowrap}
+.ideas small{display:block;color:var(--muted);font-size:13px;line-height:1.35}
+.req{margin-top:10px;font-size:13px;background:var(--spruce-soft);color:var(--spruce);border-radius:8px;padding:6px 10px;font-weight:600}
+.actions{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:14px}
+.actions .links{display:flex;gap:14px;font-size:14px;font-weight:600}
+.tally{display:flex;align-items:center;gap:6px;margin-left:auto}
+.tally span{font-size:12px;color:var(--muted);font-weight:600}
+.pip{width:24px;height:24px;border-radius:50%;border:2px solid var(--amber);background:transparent;cursor:pointer;padding:0}
+.pip[aria-pressed="true"]{background:var(--amber)}
+.pip.extra{border-style:dashed;border-color:var(--muted)}
+.pip.extra[aria-pressed="true"]{background:var(--muted)}
+
+.checkout{margin-top:14px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;font-weight:600}
+footer{margin-top:40px;color:var(--muted);font-size:13px;text-align:center}
+
+/* Bottom sheet */
+dialog{border:0;padding:0;margin:auto auto 0;width:100%;max-width:560px;max-height:85vh;background:var(--surface);color:var(--ink);border-radius:20px 20px 0 0;box-shadow:0 -10px 40px rgba(0,0,0,.25)}
+dialog::backdrop{background:rgba(10,20,20,.5)}
+.sheet{padding:10px 20px calc(24px + env(safe-area-inset-bottom,0px))}
+.grab{width:40px;height:4px;border-radius:2px;background:var(--line);margin:0 auto 14px}
+.sheet .eyebrow{color:var(--amber)}
+.sheet h3{font-family:var(--display);font-weight:800;text-transform:uppercase;font-size:30px;line-height:1;margin:6px 0 12px}
+.sheet p{margin:0 0 12px}
+.sheet .close{width:100%;justify-content:center;margin-top:6px;background:var(--spruce);color:var(--surface)}
+@media (prefers-reduced-motion:no-preference){
+  dialog[open]{animation:up .22s ease-out}
+  @keyframes up{from{transform:translateY(40px);opacity:.4}to{transform:none;opacity:1}}
+}
+</style>
+
+<div class="wrap">
+  <header class="hero">
+    <div class="eyebrow">Grain Theory Tours USA</div>
+    <h1>Asheville, <span>NC</span></h1>
+    <div class="dates">Mon Oct 19 – Fri Oct 23, 2026</div>
+    <svg class="ridges" viewBox="0 0 400 70" aria-hidden="true" preserveAspectRatio="none">
+      <path fill="var(--ridge1)" d="M0 40 L40 22 L80 34 L130 12 L175 30 L220 16 L270 32 L320 10 L360 26 L400 18 L400 70 L0 70Z"/>
+      <path fill="var(--ridge2)" d="M0 52 L50 34 L95 46 L150 28 L200 44 L250 30 L300 46 L350 32 L400 42 L400 70 L0 70Z"/>
+      <path fill="var(--ridge3)" d="M0 62 L60 48 L120 58 L180 44 L240 58 L300 46 L360 58 L400 52 L400 70 L0 70Z"/>
+      <circle cx="96" cy="58" r="3" fill="var(--amber)"/><circle cx="214" cy="54" r="3" fill="var(--leaf)"/><circle cx="330" cy="54" r="3" fill="var(--amber)"/>
+    </svg>
+  </header>
+
+  <nav class="daynav" aria-label="Jump to day">
+    <a href="#info">Need-to-know</a>
+    <a href="#mon" data-date="2026-10-19">Mon 19</a>
+    <a href="#tue" data-date="2026-10-20">Tue 20</a>
+    <a href="#wed" data-date="2026-10-21">Wed 21</a>
+    <a href="#thu" data-date="2026-10-22">Thu 22</a>
+    <a href="#fri" data-date="2026-10-23">Fri 23</a>
+  </nav>
+
+  <section id="info">
+    <div class="hotel">
+      <div><small>Home base</small><b>Hotel Indigo Asheville Downtown</b><small>151 Haywood St · check-in Mon 4 pm</small></div>
+      <a class="btn" href="https://www.ihg.com/hotelindigo/hotels/us/en/asheville/avlin/hoteldetail" target="_blank" rel="noopener">Hotel ↗</a>
+    </div>
+
+    <div class="rules">
+      <div class="limit"><div class="big">2</div><p>beers per stop are covered.<br>Want a third? Order it and pay for it yourself.</p></div>
+      <ul>
+        <li>Tastings that come <b>with a brewery tour</b> don't count toward your 2.</li>
+        <li><b>Breakfast is on your own</b> every day.</li>
+        <li><b>Lunch &amp; dinner:</b> order what looks good. Just be reasonable.</li>
+        <li>Feel free to tap the circles on each brewery card to keep count if you like. They're saved on your phone only.</li>
+      </ul>
+    </div>
+
+    <div class="bring">
+      <h3>What to bring</h3>
+      <label class="check"><input type="checkbox" id="b-water"> <span>Refillable water bottle<small>One water between beers goes a long way.</small></span></label>
+      <label class="check"><input type="checkbox" id="b-id"> <span>Driver's license<small>Required for brewery tours (Sierra Nevada, New Belgium).</small></span></label>
+      <label class="check"><input type="checkbox" id="b-shoes"> <span>Closed-toe shoes<small>Required on brewery tours. No sandals.</small></span></label>
+      <label class="check"><input type="checkbox" id="b-shirt"> <span>Shirts with sleeves<small>Required on brewery tours. No tank tops.</small></span></label>
+      <label class="check"><input type="checkbox" id="b-layer"> <span>A warm layer<small>Late-October nights drop into the 40s, and the Parkway overlooks run colder.</small></span></label>
+    </div>
+  </section>
+
+  <div id="days"></div>
+
+  <footer>Grain Theory Tours USA · Asheville, NC · Oct 19–23, 2026<br>Picks are each brewery's year-round mainstays and award winners. A medal icon marks award winners.</footer>
+</div>
+
+<dialog id="sheet" aria-labelledby="sheet-title">
+  <div class="sheet">
+    <div class="grab"></div>
+    <div class="eyebrow" id="sheet-eyebrow">Did you know</div>
+    <h3 id="sheet-title"></h3>
+    <div id="sheet-body"></div>
+    <button class="btn close" id="sheet-close" type="button">Got it</button>
+  </div>
+</dialog>
+
+<script>
+const REQ = "Tour rules: bring your driver's license, wear closed-toe shoes and a shirt with sleeves.";
+const DAYS = [
+ { id:"mon", date:"2026-10-19", dow:"Monday", n:"19", theme:"Arrival night · South Slope sours",
+   notes:[["Check in","4:00 pm at Hotel Indigo."]],
+   stops:[
+    { time:"5:00 pm", kind:"brew", tags:[["Drinks"]], name:"Wicked Weed Funkatorium",
+      blurb:"The sour and funky side of Wicked Weed, on the South Slope.",
+      url:"https://www.wickedweedbrewing.com/tours/brewpub-tours/",
+      picks:[["Black Angel Cherry Sour","The flagship sour: tart cherries, aged in bourbon barrels","Gold, 2024 U.S. Open Beer Championship"],
+             ["Red Angel","Sour aged in red-wine barrels with raspberries","Gold, U.S. Open 2022 & 2023"],
+             ["Pernicious IPA","Wicked Weed's flagship West Coast IPA, for a non-sour","Silver, 2015 Great American Beer Festival"]],
+      fact:{t:"Funkatorium", p:["This was the East Coast's first taproom dedicated entirely to sour and funky beer. More than 500 barrels age in the building, and you're drinking right next to them.","The name Wicked Weed comes from King Henry VIII, who is said to have called hops \"a wicked and pernicious weed\" that spoiled good English ale."]}},
+    { time:"7:15 pm", kind:"food", tags:[["Dinner reservation","res"]], name:"Soprana Rooftop Cucina",
+      blurb:"Brick-oven pizza and Alpine-Italian plates on the 7th floor, a short walk from the hotel.",
+      url:"https://sopranarooftop.com/",
+      label:"Good orders",
+      picks:[["A brick-oven pizza","The house specialty"],
+             ["The Asheville","A diner favorite: local Chop Shop pepperoni, mozzarella and Bee Charmer Smokin' Hot Honey"],
+             ["A local draft","The tap list leans on Asheville breweries"]],
+      fact:{t:"Soprana", p:["Soprana sits on top of the Embassy Suites at 192 Haywood St, about a block from Hotel Indigo. It opened in spring 2024 and was selected for the MICHELIN Guide American South in 2025.","Grab a seat near the windows or out on the terrace. You'll be looking west toward the Blue Ridge."]}},
+    { time:"Late night", kind:"addon", tags:[["Optional add-on","opt"]], name:"One World Brewing (Downtown)",
+      blurb:"A tiny underground brewery below Farm Burger at 10 Patton Ave. Enter through the alley.",
+      url:"https://oneworldbrewing.com/location/downtown/#info",
+      picks:[["Whale of a Tale Pale Ale","The lighter flagship"],
+             ["Inner Thigh-P-A","Their house IPA"],
+             ["Chocolate Truffle Stout","Their best-known beer and a rich nightcap"]],
+      fact:{t:"One World", p:["You walk down an alley and three flights of stairs to reach the bar. The space was a speakeasy in the 1930s, and it has no windows at all.","The beer comes off a 1.5-barrel system, which is very small for a brewery. Look for the Sjoelbak board, a Dutch shuffleboard game, in the corner."]}}
+   ]},
+ { id:"tue", date:"2026-10-20", dow:"Tuesday", n:"20", theme:"South Slope walking day",
+   notes:[["Breakfast","On your own."],["Meet at 10:30 am","We walk to White Labs together, about 20 minutes. All of today's breweries are within a few blocks of each other."]],
+   stops:[
+    { time:"11:00 am", kind:"brew", tags:[["Tour + pizza lunch","res"]], name:"White Labs Brewing Co.",
+      blurb:"A brewpub run by one of the world's big brewing-yeast labs. The tour and pizza lunch are reserved.",
+      url:"https://whitelabsbrewingco.com/asheville-nc/",
+      label:"Must-try (house beers rotate here)",
+      picks:[["The side-by-side yeast flight","Their specialty: the same beer made with different yeast strains. It doesn't count toward your 2 if it's part of our tour; if you order one yourself, it does"],
+             ["The house lager","For something light after the tour"]],
+      fact:{t:"White Labs", p:["White Labs sells liquid yeast to breweries all over the world, and its production lab is right next door to this taproom.","Even the pizza is part of the lesson. Every dough here is slow-risen with White Labs yeast cultures, and the side-by-side tastings show how much flavor comes from yeast alone."]}},
+    { kind:"brew", tags:[["IPA focused"]], name:"Burial Beer Co. — South Slope",
+      blurb:"Hop-forward beers with a heavy-metal soul: dark art, death-and-harvest imagery and loud riffs, in a converted transmission shop on Collier Ave.",
+      url:"https://burialbeer.com/pages/asheville-south-slope",
+      picks:[["Shadowclock Pilsner","Year-round German-style pils, the light pick"],
+             ["Surf Wax IPA","Their signature West Coast-style IPA and the reason to come"],
+             ["Lightgrinder","American porter, their year-round dark beer"]],
+      fact:{t:"Burial", p:["Burial leans hard into a heavy-metal look and feel. The can art is dark and detailed, the beer names sound like album titles, and the soundtrack runs loud. Look behind the bar: there's an old crosscut saw blade on the wall, and the tap handles are made from real farm tools like trowels, scythes and pitchforks.","The founders came up with the idea while living in Seattle, then moved to Asheville and opened here in 2013 on a tiny 1-barrel system.","Beer fans have noticed. Craft Beer & Brewing readers voted Burial the #1 Small Brewery in the World in 2021 and the #1 Small Regional Brewery in the World in 2022. Thrillist also named it one of the 13 Essential American Breweries of 2019."]}},
+    { kind:"brew", tags:[["Classic"]], name:"Green Man Brewery",
+      blurb:"One of Asheville's oldest breweries. The original taproom, Dirty Jack's, has darts and soccer on TV.",
+      url:"https://www.greenmanbrewery.com/",
+      picks:[["Green Man ESB","Their award-winning signature and the oldest recipe they still brew"],
+             ["Green Man IPA","British-leaning and balanced","Gold, 2021 NC Brewers Cup"],
+             ["Green Man Porter","Chocolatey and smooth","Gold, 2021 Great American Beer Festival"]],
+      fact:{t:"Green Man", p:["Green Man started in 1997 in the basement of the Jack of the Wood pub downtown, making it Asheville's second official brewery. Highland was the first.","When the brewery moved to Buxton Ave in 2005, the new taproom picked up the nickname \"Dirty Jack's\" after that pub. The big building next door is the newer Greenmansion."]}},
+    { kind:"brew", tags:[["Lagers & sours"]], name:"Hi-Wire Brewing — South Slope",
+      blurb:"Circus-themed brewery with a medal-winning lager, sours and taproom-only small batches.",
+      url:"https://hiwirebrewing.com/south-slope/",
+      picks:[["Hi-Wire Lager","Their flagship, light and crisp","Silver, 2025 World Beer Cup"],
+             ["Hi-Pitch Mosaic IPA","Flagship IPA, big hop aroma without harsh bitterness"],
+             ["Bed of Nails Brown","Flagship English-style brown ale"]],
+      fact:{t:"Hi-Wire", p:["Hi-Wire Lager beat out 80 entries in its category to take silver at the 2025 World Beer Cup, which many consider the Olympics of beer. Hi-Wire has also won Great American Beer Festival gold twice: for a German-style märzen in 2016 and a sour brown ale aged on palo santo wood in 2019.","Two college roommates opened this taproom in 2013 in a 1947 building, using equipment bought from a brewery that had closed. The circus theme is about balance in the beer, and about Asheville's slightly wild beer scene."]}},
+    { time:"6:00 pm", kind:"food", tags:[["Dinner reservation","res"]], name:"Tupelo Honey — Downtown",
+      blurb:"The original location of the Southern comfort-food chain born in Asheville.",
+      url:"https://tupelohoneycafe.com/restaurant/downtown-asheville/",
+      label:"Good orders",
+      picks:[["Fried green tomatoes","Served over goat cheese grits"],
+             ["Shrimp & grits or honey-dusted fried chicken","The two dishes they're best known for"],
+             ["The biscuits","Come with blueberry jam and whipped butter"]],
+      fact:{t:"Tupelo Honey", p:["Tupelo Honey opened right here in downtown Asheville on December 7, 2000. It began as a late-night spot for locals and was one of the city's earliest farm-to-table restaurants.","It has since grown into a chain across the South and beyond, but this is where it started."]}},
+    { time:"Late night", kind:"addon", tags:[["Optional add-on","opt"],["Closes 9 pm","opt"]], name:"DSSOLVR",
+      blurb:"Hazy IPAs, fruited sours and odd-named experiments downtown. Get there early since it closes at 9.",
+      url:"https://dssolvr.com/location/avl-taproom/",
+      picks:[["Thank You For Existing","Kölsch and their most-ordered beer, the light pick"],
+             ["Reapers & Creepers","Hazy IPA, their specialty and a fan favorite"],
+             ["Uppercuts & Laser Tag","Another top-rated hazy IPA"]],
+      fact:{t:"DSSOLVR", p:["Say it \"dissolver.\" The name refers to the three owners blending their brewing backgrounds into one business. Their tagline is \"Brewed until Surreal.\"","Beer names often carry a story. \"We Don't Sell Those Here\" is named for a wine seller in Savannah who wouldn't sell them a corkscrew."]}},
+    { time:"Late night", kind:"addon", tags:[["Or instead","opt"],["Open till 10 pm","opt"]], name:"Pack's Tavern",
+      blurb:"Big local tap list in a historic building on Pack Square. Good if DSSOLVR has closed.",
+      url:"https://packstavern.com/",
+      label:"Order tip",
+      picks:[["Pick something local","Try a brewery you didn't make it to today"]],
+      fact:{t:"Pack's Tavern", p:["The building went up in 1907 as a lumber yard. During Prohibition its basement became a moonshine distribution hub, with the lumber business as a front.","Liquor moved through a side loading dock and an underground tunnel that ran across Eagle Street."]}}
+   ]},
+ { id:"wed", date:"2026-10-21", dow:"Wednesday", n:"21", theme:"Fall colors & van day",
+   notes:[["Breakfast","On your own."],["Van pickup 8:45 am","Don't be late. Bring your ID, closed-toe shoes and a sleeved shirt for the 2 pm Sierra Nevada tour."]],
+   stops:[
+    { kind:"scenic", tags:[["Scenic drive"]], name:"Blue Ridge Parkway fall colors",
+      blurb:"Late October is prime leaf season around Asheville. Overlooks are cooler and windier than town.",
+      url:"https://www.nps.gov/blri/planyourvisit/roadclosures.htm", urlLabel:"Road status",
+      fact:{t:"The Parkway", p:["The Blue Ridge Parkway runs 469 miles from Virginia's Shenandoah National Park to the Great Smokies. Asheville sits near milepost 382, and the mileposts count up as you head south.","Its highest point is Richland Balsam Overlook, at 6,053 feet near milepost 431. Some sections can close after storms, so the road-status link is worth a look that morning."]}},
+    { kind:"brew", tags:[["Lagers"]], name:"Brevard Brewing Co.",
+      blurb:"A small downtown Brevard taproom focused on German-style lagers.",
+      url:"https://www.brevard-brewing.com/",
+      picks:[["Bohemian Pilsner","The flagship, with Czech and German noble hops"],
+             ["American IPA","The hoppy option"],
+             ["Munich Dunkel","Smooth, malty dark lager"]],
+      fact:{t:"White squirrels", p:["Brevard is famous for its white squirrels. Local legend says they arrived in 1949 after a carnival truck overturned. The town celebrates them every May with White Squirrel Weekend, so keep an eye on the trees.","Brevard Brewing opened in 2012 as Western North Carolina's lager specialist. Lagers ferment cold and age more than twice as long as most ales, which is why few small breweries focus on them."]}},
+    { kind:"food", tags:[["Lunch","food"]], name:"Hawg Wild Smokehouse",
+      blurb:"Barbecue just outside Brevard, in Pisgah Forest.",
+      url:"https://hawgbbq.com/",
+      label:"Good orders",
+      picks:[["Chopped pork, Eastern or Western style","Try the style you don't usually get"],
+             ["Hush puppies","Regulars rave about them"],
+             ["Peach cobbler","If you have room"]],
+      fact:{t:"Eastern vs. Western", p:["North Carolina has two barbecue camps. Eastern style uses the whole hog with a thin vinegar-and-pepper sauce. Western (or Lexington) style uses pork shoulder and adds a little tomato to the sauce.","Hawg Wild serves both, so this is a good place to taste them side by side."]}},
+    { time:"2:00 pm", kind:"brew", tags:[["Tour reserved","res"]], name:"Sierra Nevada — Mills River",
+      blurb:"The California pioneer's East Coast brewery, with a big taproom and restaurant.",
+      url:"https://sierranevada.com/visit/mills-river/taproom",
+      req:true,
+      picks:[["Kellerweis","Year-round Bavarian-style hefeweizen, the light pick"],
+             ["Pale Ale","The 1980 classic that helped start American craft beer","First place at the 1983 Great American Beer Festival, and many medals since. Also Jeramie's Desert Island Beer."],
+             ["Hazy Little Thing","Their year-round hazy IPA"]],
+      fact:{t:"Sierra Nevada", p:["Sierra Nevada has won 33 Great American Beer Festival medals, tied for the most of any brewery. This was the first production brewery ever to earn LEED Platinum certification, and its 20-barrel pilot brewhouse in the taproom makes beers you can only get here.","Ask about Celly Drippins. It's made from the drippings of the hop bags used for Celebration, and for years it was a secret tap at this taproom. Celebration season starts in the fall, so you might get lucky."]}},
+    { kind:"brew", tags:[["River Arts District"]], name:"Wedge Brewery at Foundation",
+      blurb:"An easygoing outdoor hangout beside the railroad tracks.",
+      url:"https://wedgebrewing.com/",
+      picks:[["Julian Price Pilsner","Year-round Czech-style pils, the light pick"],
+             ["Iron Rail IPA","English-style IPA and their best seller","Mountain Xpress IPA of the Year, 7 years running"],
+             ["Community Porter","English-style porter with carob and maple"]],
+      fact:{t:"Wedge at Foundation", p:["The building went up in 1898 for Hans Rees & Sons, which grew into the largest leather tannery in the country.","Trains still run right past the patio. Wedge was also the River Arts District's first brewery when its original location opened. In the fall, ask if their Märzen is still pouring. It's a gold-medal Oktoberfest lager."]}},
+    { time:"Evening", kind:"free", tags:[["Free time","opt"]], name:"Evening on your own",
+      blurb:"Dinner and drinks are on your own tonight. Here are some ideas, starting with spots near our last stop. Hours shown are for Wednesday.",
+      ideas:[
+        ["Near Wedge at Foundation (River Arts District)", [
+          ["All Souls Pizza","Popular wood-fired pizza a few minutes away on Clingman Ave.","https://www.google.com/maps/search/?api=1&query=All+Souls+Pizza+Asheville+NC","4:30–9 pm"],
+          ["Plēb Urban Winery","Urban winery on Lyman St in the River Arts District, if anyone needs a break from beer.","https://www.google.com/maps/search/?api=1&query=Pleb+Urban+Winery+289+Lyman+St+Asheville+NC","2–8 pm"]
+        ]],
+        ["Back near the hotel", [
+          ["Wicked Weed Brewpub","The original Wicked Weed at 91 Biltmore Ave, with a full kitchen. Pernicious IPA started here.","https://www.google.com/maps/search/?api=1&query=Wicked+Weed+Brewing+91+Biltmore+Ave+Asheville","Noon–10 pm"],
+          ["Asheville Pizza & Brewing (Merrimon Ave)","Pizza, house beer and $3 movies you can watch with your beer. A short ride north.","https://www.ashevillebrewing.com/movies/","11:30 am–9 pm"],
+          ["DSSOLVR","If you skipped Tuesday's late-night add-on, here's your second chance.","https://www.google.com/maps/search/?api=1&query=DSSOLVR+63+N+Lexington+Ave+Asheville+NC","3–9 pm"],
+          ["Pack's Tavern","Big local tap list and pub food on Pack Square.","https://www.google.com/maps/search/?api=1&query=Pack%27s+Tavern+Asheville+NC","11:30 am–10 pm"]
+        ]]
+      ]}
+   ]},
+ { id:"thu", date:"2026-10-22", dow:"Thursday", n:"22", theme:"West Asheville, Weaverville & Woodfin",
+   notes:[["Breakfast","On your own."],["Route","New Belgium, The Whale and Cellarest are close together in West Asheville. Leveller is in downtown Weaverville and Zillicoah is on the river in Woodfin, both north of town on the way back."]],
+   stops:[
+    { kind:"brew", tags:[["Brewery tour"]], name:"New Belgium — Asheville",
+      blurb:"The Fat Tire brewery's East Coast home on the French Broad River.",
+      url:"https://www.newbelgium.com/visit/asheville/",
+      req:true,
+      picks:[["Fat Tire & Voodoo Ranger","The amber that built the company and the current #1 craft beer brand in the country"],
+             ["La Folie","Sour brown ale aged in French oak foeders, their specialty","Gold, 2019 Great American Beer Festival"]],
+      fact:{t:"New Belgium", p:["Before the brewery, these 18 acres held a stockyard, an auto junkyard and even a circus training ground. New Belgium cleaned up the polluted site and raised parts of it 10 feet to get out of the floodplain.","About 14 linear miles of wood from the old stockyard buildings now line the taproom walls. Fat Tire is named for the bike co-founder Jeff Lebesch rode through Belgium's beer country."]}},
+    { kind:"bar", tags:[["If time allows","opt"]], name:"The Whale",
+      blurb:"A West Asheville craft beer bar with 20 rotating taps and a deep bottle list.",
+      url:"https://thewhalecollective.com/west-asheville-nc/",
+      label:"Order tips",
+      picks:[["Great bottle selection of Belgian beers","Orval, Westmalle Tripel, Oud Beersel"],
+             ["For something really special, check the Cellar List","Be forewarned: $$$ (Cantillon, 3 Fonteinen, and even Jester King!)"]],
+      fact:{t:"The Whale", p:["In beer-trading circles a \"whale\" is a rare, hard-to-find beer, and hunting those is this bar's specialty.","It was started by two Wicked Weed veterans, so you've come full circle from Monday night."]}},
+    { kind:"brew", tags:[["Barrel fermented"]], name:"Cellarest Beer Project",
+      blurb:"Small-batch beers fermented and lagered in wood. Garden patio on Haywood Rd.",
+      url:"https://cellarestbeer.com/",
+      picks:[["Mosey On Over","Pilsner, the light pick","Gold, 2024 NC Brewers Cup"],
+             ["Haywood Haylife","Their American-style house lager, named for their street"],
+             ["A barrel-fermented farmhouse ale","Their specialty. There's always one on"]],
+      fact:{t:"Cellarest", p:["Cellarest ferments, lagers and ages beer in three different kinds of wood, and gets grain from local maltsters and produce from the Appalachians.","Their European-style serving tanks push beer with compressed air against a liner instead of CO2, and their spent grain goes to local livestock as feed."]}},
+    { kind:"brew", tags:[["Weaverville"]], name:"Leveller Brewing Co.",
+      blurb:"A small Main Street brewery: crisp lagers, farmhouse IPAs and stouts on a beer engine.",
+      url:"https://www.levellerbrewing.com/",
+      picks:[["Crusher Run","German-style helles, crisp and bready"],
+             ["Sheep Shaped","Farmhouse IPA with a touch of Brett funk"],
+             ["Little Ember","Irish extra stout poured from a beer engine"]],
+      fact:{t:"Leveller", p:["The name comes from the Levellers, a 17th-century English movement that argued for equality, popular sovereignty and land held in common.","Little Ember is built for a beer engine, a hand pump that pulls beer up from the cellar the old British way, which gives it a soft, velvety pour."]}},
+    { kind:"brew", tags:[["Dinner & beers","res"]], name:"Zillicoah Beer Company",
+      blurb:"Open-fermented lagers and farmhouse ales on the bank of the French Broad River. A great last night.",
+      url:"https://www.zillicoahbeer.com/",
+      picks:[["Kellerpils","Their most popular beer: hop-forward, crisp and dry"],
+             ["Zillicoah IPA","The hoppy option"],
+             ["Dunkel","Dark Munich lager, perfect for a cool river night"]],
+      fact:{t:"Zillicoah", p:["Zillicoah comes from the Cherokee name for this section of the French Broad River, and the riverbank is the heart of the property. It was the first brewery in Woodfin.","Open fermentation means the beer ferments in wide, uncovered vessels, an old European technique that lets the yeast work differently and gives a softer, rounder flavor. Look for the Low Country Rice Lager made with Carolina Gold rice."]}}
+   ]},
+ { id:"fri", date:"2026-10-23", dow:"Friday", n:"23", theme:"Heading home", notes:[], stops:[], checkout:true }
+];
+
+const glass = '<svg class="glass" viewBox="0 0 16 20" aria-hidden="true"><path d="M2 2h12l-1.6 16H3.6Z" fill="var(--amber)" opacity=".85"/><path d="M2 2h12l-.3 3H2.3Z" fill="var(--surface)" stroke="var(--amber)" stroke-width="1"/></svg>';
+const medal = '<svg viewBox="0 0 12 14" aria-hidden="true"><path d="M3 0h2l1 4 1-4h2L7.5 5.5 6 5 4.5 5.5Z" fill="var(--leaf)"/><circle cx="6" cy="9.5" r="4" fill="var(--amber)"/></svg>';
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const mapUrl = name => "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(name + " Asheville NC");
+
+let store = {};
+try { store = JSON.parse(localStorage.getItem("avl-trip") || "{}"); } catch(e) {}
+const save = () => { try { localStorage.setItem("avl-trip", JSON.stringify(store)); } catch(e) {} };
+
+const facts = {};
+let html = "";
+DAYS.forEach(d => {
+  html += `<section class="day" id="${d.id}"><div class="dayhead"><div class="dnum">${d.n}</div><div><h2>${d.dow}</h2><div class="theme">${esc(d.theme)}</div></div></div>`;
+  d.notes.forEach(([b, t]) => { html += `<div class="note"><span><b>${esc(b)}:</b> ${esc(t)}</span></div>`; });
+  if (d.checkout) html += `<div class="checkout">Check out of Hotel Indigo by 11:00 am. Safe travels!</div>`;
+  if (d.stops.length) {
+    html += `<ol class="timeline">`;
+    d.stops.forEach((s, i) => {
+      const key = d.id + i;
+      if (s.fact) facts[key] = s.fact;
+      const cls = s.kind === "food" ? "food" : (s.kind === "addon" ? "addon" : "");
+      const tags = (s.tags || []).map(([t, c]) => `<span class="tag ${c || ""}">${esc(t)}</span>`).join("");
+      html += `<li class="stop ${cls}"><div class="card"><div class="meta">${s.time ? `<span class="time">${esc(s.time)}</span>` : ""}${tags}</div>`;
+      html += `<h3>${esc(s.name)}</h3>${s.blurb ? `<p class="blurb">${esc(s.blurb)}</p>` : ""}`;
+      if (s.picks) {
+        html += `<div class="picks-label">${esc(s.label || "Must-try")}</div><ul class="picks">`;
+        s.picks.forEach(([b, t, award]) => { html += `<li>${glass}<div><b>${esc(b)}</b><small>${esc(t)}</small>${award ? `<span class="award">${medal}${esc(award)}</span>` : ""}</div></li>`; });
+        html += `</ul>`;
+      }
+      if (s.ideas) {
+        s.ideas.forEach(([group, items]) => {
+          html += `<div class="picks-label">${esc(group)}</div><ul class="ideas">`;
+          items.forEach(([n, t, u, h]) => { html += `<li><a href="${esc(u)}" target="_blank" rel="noopener">${esc(n)} ↗</a>${h ? ` <span class="hours">${esc(h)}</span>` : ""}<small>${esc(t)}</small></li>`; });
+          html += `</ul>`;
+        });
+      }
+      if (s.req) html += `<div class="req">${esc(REQ)}</div>`;
+      if (s.url || s.fact) {
+        html += `<div class="actions">`;
+        if (s.fact) html += `<button class="btn" type="button" data-fact="${key}">Learn more</button>`;
+        html += `<span class="links">`;
+        if (s.url) html += `<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.urlLabel || "Website")} ↗</a>`;
+        if (s.kind !== "scenic" && s.kind !== "free") html += `<a href="${mapUrl(s.name.replace(/ — .*/, "").replace(/\(.*\)/, ""))}" target="_blank" rel="noopener">Map ↗</a>`;
+        html += `</span>`;
+        if (s.kind === "brew" || s.kind === "addon") {
+          html += `<span class="tally" role="group" aria-label="Beers at ${esc(s.name)}"><span>Beers</span>`;
+          [0,1,2,3,4].forEach(n => {
+            const on = !!(store[key] && store[key][n]);
+            html += `<button type="button" class="pip${n>=2?" extra":""}" data-key="${key}" data-n="${n}" aria-pressed="${on}" aria-label="${n>=2?"Beer "+(n+1)+", on you":"Beer "+(n+1)+", covered"}"></button>`;
+          });
+          html += `</span>`;
+        }
+        html += `</div>`;
+      }
+      html += `</div></li>`;
+    });
+    html += `</ol>`;
+  }
+  html += `</section>`;
+});
+document.getElementById("days").innerHTML = html;
+
+// Beer tally
+document.addEventListener("click", e => {
+  const pip = e.target.closest(".pip");
+  if (pip) {
+    const k = pip.dataset.key, n = +pip.dataset.n;
+    store[k] = store[k] || [];
+    store[k][n] = !store[k][n];
+    pip.setAttribute("aria-pressed", store[k][n]);
+    save();
+  }
+});
+
+// Packing checklist
+document.querySelectorAll(".bring input").forEach(cb => {
+  cb.checked = !!(store.bring && store.bring[cb.id]);
+  cb.addEventListener("change", () => { store.bring = store.bring || {}; store.bring[cb.id] = cb.checked; save(); });
+});
+
+// Fact sheet
+const sheet = document.getElementById("sheet");
+document.addEventListener("click", e => {
+  const b = e.target.closest("[data-fact]");
+  if (!b) return;
+  const f = facts[b.dataset.fact];
+  document.getElementById("sheet-title").textContent = f.t;
+  document.getElementById("sheet-body").innerHTML = f.p.map(p => `<p>${esc(p)}</p>`).join("");
+  if (sheet.showModal) sheet.showModal(); else sheet.setAttribute("open", "");
+});
+document.getElementById("sheet-close").addEventListener("click", () => sheet.close ? sheet.close() : sheet.removeAttribute("open"));
+sheet.addEventListener("click", e => { if (e.target === sheet) sheet.close(); });
+
+// Highlight today during the trip
+const t = new Date(), today = t.getFullYear() + "-" + String(t.getMonth()+1).padStart(2,"0") + "-" + String(t.getDate()).padStart(2,"0");
+document.querySelectorAll(".daynav a[data-date]").forEach(a => { if (a.dataset.date === today) { a.classList.add("today"); a.textContent += " · Today"; } });
+</script>
+
+</body></html>
