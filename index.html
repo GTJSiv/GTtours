@@ -787,9 +787,12 @@ remind.addEventListener("click", e => { if (e.target === remind) closeRemind(); 
 (() => {
   const due = pv ? today >= "2026-10-22" : Date.now() >= Date.parse("2026-10-22T08:00:00-04:00");
   if (!due) return;
-  let seen = false;
-  try { seen = !pv && localStorage.getItem("gt-photo-reminder") === "shown"; localStorage.setItem("gt-photo-reminder", "shown"); } catch (e) {}
-  if (seen) return;
+  // Previews always show the reminder and never mark it as seen
+  if (!pv) {
+    let seen = false;
+    try { seen = localStorage.getItem("gt-photo-reminder") === "shown"; localStorage.setItem("gt-photo-reminder", "shown"); } catch (e) {}
+    if (seen) return;
+  }
   setTimeout(() => { if (remind.showModal) remind.showModal(); else remind.setAttribute("open", ""); }, 900);
 })();
 
