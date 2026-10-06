@@ -177,6 +177,12 @@ dialog::backdrop{background:rgba(10,20,20,.5)}
 dialog{overflow-y:auto;overscroll-behavior:contain}
 .fab{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:6;width:58px;height:58px;border-radius:50%;border:0;padding:0;display:grid;place-items:center;cursor:pointer;background:var(--band);color:var(--band-stamp);box-shadow:0 6px 18px rgba(10,30,30,.3),0 0 0 3px var(--bg)}
 .fab svg{width:28px;height:28px}
+.camchip{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--band);color:var(--band-stamp);vertical-align:-5px;margin-inline:1px}
+.camchip svg{width:14px;height:14px}
+@media (prefers-reduced-motion:no-preference){
+  .fab.nudge{animation:nudge 1.2s ease-in-out 4}
+  @keyframes nudge{0%,100%{transform:scale(1)}50%{transform:scale(1.14);box-shadow:0 6px 18px rgba(10,30,30,.3),0 0 0 3px var(--bg),0 0 0 9px var(--amber)}}
+}
 .fab:focus-visible{outline:3px solid var(--amber);outline-offset:3px}
 .wrap{padding-bottom:96px}
 .psub{color:var(--muted);margin:-4px 0 6px}
@@ -264,6 +270,7 @@ dialog{overflow-y:auto;overscroll-behavior:contain}
         <li><b>No open drinks on the street.</b> Finish your beer before you leave a brewery.</li>
         <li>Asheville sits at about 2,100 feet. <b>Drink water</b> between beers.</li>
         <li>Expect highs in the 60s and nights in the 40s. Bring a layer.</li>
+        <li><b>Share your photos:</b> tap the <span class="camchip" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 8.5A2.5 2.5 0 0 1 6.5 6h1.6l1.2-1.8A1.5 1.5 0 0 1 10.5 3.5h3a1.5 1.5 0 0 1 1.2.7L15.9 6h1.6A2.5 2.5 0 0 1 20 8.5v8a2.5 2.5 0 0 1-2.5 2.5h-11A2.5 2.5 0 0 1 4 16.5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="12" cy="12.3" r="3.6" fill="none" stroke="currentColor" stroke-width="2"/></svg></span> camera button at the bottom right to add your pictures to our group album. After the trip we'll put everyone's photos together.</li>
         <li><b>Lost or running late?</b> Text a trip leader right away. Numbers are under Help &amp; contacts at the top.</li>
       </ul>
     </details>
@@ -319,6 +326,17 @@ dialog{overflow-y:auto;overscroll-behavior:contain}
     <p class="pnote" id="photo-soon" hidden>Photo uploads open soon. Check back before the trip!</p>
     <p class="pnote" id="photo-out" hidden>Uploading doesn't work inside this preview. <a id="photo-out-link" href="#" target="_blank" rel="noopener">Open the photo uploader ↗</a></p>
     <button class="btn plain" id="photos-close" type="button">Close</button>
+  </div>
+</dialog>
+
+<dialog id="remind" aria-labelledby="remind-title">
+  <div class="sheet">
+    <div class="grab"></div>
+    <div class="eyebrow">Group album</div>
+    <h3 id="remind-title">Send Us Your Best Shots</h3>
+    <p>We're building one album from everyone's photos. Pick your favorites from the trip (the views, the pints, the people) and upload them with the camera button at the bottom right of this page.</p>
+    <button class="btn close" id="remind-go" type="button">Upload my photos</button>
+    <button class="btn plain" id="remind-later" type="button">Maybe later</button>
   </div>
 </dialog>
 
@@ -756,6 +774,24 @@ pSend.addEventListener("click", async () => {
   pFiles.value = ""; document.getElementById("photo-pick-text").textContent = "Choose more photos";
   pSend.textContent = "Upload photos";
 });
+
+// One-time photo reminder from Thursday morning (8 am Asheville time) onward
+const remind = document.getElementById("remind"), fab = document.getElementById("photo-open");
+const closeRemind = () => {
+  remind.close ? remind.close() : remind.removeAttribute("open");
+  fab.classList.remove("nudge"); void fab.offsetWidth; fab.classList.add("nudge");
+};
+document.getElementById("remind-go").addEventListener("click", () => { closeRemind(); fab.click(); });
+document.getElementById("remind-later").addEventListener("click", closeRemind);
+remind.addEventListener("click", e => { if (e.target === remind) closeRemind(); });
+(() => {
+  const due = pv ? today >= "2026-10-22" : Date.now() >= Date.parse("2026-10-22T08:00:00-04:00");
+  if (!due) return;
+  let seen = false;
+  try { seen = !pv && localStorage.getItem("gt-photo-reminder") === "shown"; localStorage.setItem("gt-photo-reminder", "shown"); } catch (e) {}
+  if (seen) return;
+  setTimeout(() => { if (remind.showModal) remind.showModal(); else remind.setAttribute("open", ""); }, 900);
+})();
 
 // Collapse / expand a day
 function setDay(section, open) {
