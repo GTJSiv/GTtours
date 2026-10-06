@@ -140,6 +140,8 @@ details:not([open]) .caret{transform:rotate(-90deg)}
 .glass{width:16px;height:20px;margin-top:2px;flex:0 0 auto}
 .picks b{display:block;font-size:15px;line-height:1.3}
 .picks small{display:block;color:var(--muted);font-size:13px;line-height:1.35}
+.subpicks{list-style:none;margin:8px 0 2px;padding:0 0 0 12px;border-left:2px solid var(--line);display:grid;gap:8px}
+.subpicks b{font-size:14px}
 .award{display:inline-flex;align-items:center;gap:5px;margin-top:4px;font-size:12px;font-weight:700;color:var(--amber);background:var(--amber-soft);border-radius:6px;padding:2px 8px 2px 6px;line-height:1.3}
 .award svg{width:11px;height:13px;flex:0 0 auto}
 .ideas{margin:8px 0 0;padding:0;list-style:none;display:grid;gap:10px}
@@ -409,8 +411,9 @@ const DAYS = [
       blurb:"Brick-oven pizza and Alpine-Italian plates on the 7th floor, a short walk from the hotel.",
       url:"https://sopranarooftop.com/",
       label:"Good orders",
-      picks:[["A brick-oven pizza","The house specialty"],
-             ["The Asheville","A diner favorite: local Chop Shop pepperoni, mozzarella and Bee Charmer Smokin' Hot Honey"],
+      picks:[["A brick-oven pizza","The house specialty", null, [
+               ["The Asheville","A diner favorite: local Chop Shop pepperoni, mozzarella and Bee Charmer Smokin' Hot Honey"],
+               ["Quattro Formaggi (4 Cheese)","A meatless option: ricotta, fresh mozzarella, fontina, Pecorino Romano, garlic confit, garlic herb cream, herbs and basil oil"]]],
              ["A local draft","The tap list leans on Asheville breweries"]],
       bp:["<strong>Eats:</strong> <strong>The Fig &amp; Prosciutto</strong> or <strong>The Asheville</strong> (pepperoni and hot honey) as my pizza choice.",
           "<strong>Drinks:</strong> Multiple craft lagers on tap that will pair nicely with a spicy pie. The menu says Sierra Nevada Seasonal... Fingers crossed it's <b>Celebration Fresh Hop IPA</b>, my favorite all-time seasonal beer."],
@@ -623,7 +626,10 @@ DAYS.forEach(d => {
       html += `<h3>${esc(s.name)}</h3>${s.blurb ? `<p class="blurb">${esc(s.blurb)}</p>` : ""}`;
       if (s.picks) {
         html += `<div class="picks-label">${esc(s.label || "GT Recommends:")}</div><ul class="picks">`;
-        s.picks.forEach(([b, t, award]) => { html += `<li>${glass}<div><b>${esc(b)}</b><small>${esc(t)}</small>${award ? `<span class="award">${medal}${esc(award)}</span>` : ""}</div></li>`; });
+        s.picks.forEach(([b, t, award, subs]) => {
+          const sub = subs ? `<ul class="subpicks">${subs.map(([sb, st]) => `<li><b>${esc(sb)}</b><small>${esc(st)}</small></li>`).join("")}</ul>` : "";
+          html += `<li>${glass}<div><b>${esc(b)}</b><small>${esc(t)}</small>${award ? `<span class="award">${medal}${esc(award)}</span>` : ""}${sub}</div></li>`;
+        });
         html += `</ul>`;
       }
       if (s.ideas) {
