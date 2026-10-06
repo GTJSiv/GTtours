@@ -50,7 +50,7 @@ a{color:var(--spruce);text-underline-offset:2px}
 h1{font-family:var(--display);font-weight:700;font-size:clamp(42px,12vw,60px);line-height:.92;margin:6px 0 8px;letter-spacing:.01em;text-wrap:balance;text-transform:uppercase}
 h1 span{color:var(--amber)}
 .dates{font-weight:600;font-size:15px}
-.ridges{display:block;width:100%;height:auto;margin-top:18px}
+.ridges{display:block;width:100%;height:auto;margin-top:8px}
 
 /* Day chips */
 .daynav{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);margin-inline:-16px;padding:10px 16px;border-bottom:1px solid var(--line);display:flex;gap:8px;overflow-x:auto;scrollbar-width:none}
@@ -144,6 +144,7 @@ details:not([open]) .caret{transform:rotate(-90deg)}
 .subpicks b{font-size:14px}
 .subpicks li{display:grid;grid-template-columns:8.6em minmax(0,1fr);gap:2px 8px;align-items:start}
 .subname{min-width:0}
+@media (max-width:480px){.subpicks li{grid-template-columns:minmax(0,1fr);gap:1px}}
 .subnote{display:block;font-size:13px;font-weight:500;color:var(--ink);margin-top:1px}
 .award{display:inline-flex;align-items:center;gap:5px;margin-top:4px;font-size:12px;font-weight:700;color:var(--amber);background:var(--amber-soft);border-radius:6px;padding:2px 8px 2px 6px;line-height:1.3}
 .award svg{width:11px;height:13px;flex:0 0 auto}
@@ -174,6 +175,10 @@ footer{margin-top:40px;color:var(--muted);font-size:13px;text-align:center}
 dialog{border:0;padding:0;margin:auto auto 0;width:100%;max-width:560px;max-height:85vh;background:var(--surface);color:var(--ink);border-radius:20px 20px 0 0;box-shadow:0 -10px 40px rgba(0,0,0,.25)}
 dialog::backdrop{background:rgba(10,20,20,.5)}
 .sheet{padding:10px 20px calc(24px + env(safe-area-inset-bottom,0px))}
+.sheet{position:relative}
+.sheet-x{position:absolute;top:12px;right:12px;width:36px;height:36px;border-radius:50%;border:0;padding:0;display:grid;place-items:center;cursor:pointer;background:var(--spruce-soft);color:var(--ink)}
+.sheet-x svg{width:18px;height:18px}
+.sheet-x:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
 .grab{width:40px;height:4px;border-radius:2px;background:var(--line);margin:0 auto 14px}
 .sheet .eyebrow{color:var(--amber)}
 .sheet h3{font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:30px;line-height:1;margin:6px 0 12px}
@@ -262,7 +267,7 @@ dialog{overflow-y:auto;overscroll-behavior:contain}
 
   <section id="info">
     <div class="hotel">
-      <div><small>Home base</small><b>Hotel Indigo Asheville Downtown</b><small>151 Haywood St · check-in Mon 4 pm</small></div>
+      <div><small>Home base</small><b>Hotel Indigo Asheville Downtown</b><small>151 Haywood St · check-in Mon 4&nbsp;pm</small></div>
       <a class="btn" href="https://www.ihg.com/hotelindigo/hotels/us/en/asheville/avlin/hoteldetail" target="_blank" rel="noopener">Hotel ↗</a>
     </div>
 
@@ -297,7 +302,7 @@ dialog{overflow-y:auto;overscroll-behavior:contain}
 
 <dialog id="sheet" aria-labelledby="sheet-title">
   <div class="sheet">
-    <div class="grab"></div>
+    <div class="grab"></div><button type="button" class="sheet-x" aria-label="Close"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></button>
     <div class="eyebrow" id="sheet-eyebrow">Did you know</div>
     <h3 id="sheet-title"></h3>
     <div class="byline" id="sheet-byline" hidden><span class="bp-mini" aria-hidden="true">BP</span><span><b>Jeramie</b>Grain Theory Brewer &amp; Certified Beer Expert (Snob)</span></div>
@@ -312,7 +317,7 @@ dialog{overflow-y:auto;overscroll-behavior:contain}
 
 <dialog id="photos" aria-labelledby="photos-title">
   <div class="sheet">
-    <div class="grab"></div>
+    <div class="grab"></div><button type="button" class="sheet-x" aria-label="Close"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></button>
     <div class="eyebrow">Group album</div>
     <h3 id="photos-title">Share Your Photos</h3>
     <p class="psub">Add your trip photos to our shared Grain Theory album. After the trip we'll put everyone's shots together.</p>
@@ -336,7 +341,7 @@ dialog{overflow-y:auto;overscroll-behavior:contain}
 
 <dialog id="remind" aria-labelledby="remind-title">
   <div class="sheet">
-    <div class="grab"></div>
+    <div class="grab"></div><button type="button" class="sheet-x" aria-label="Close"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></button>
     <div class="eyebrow">Group album</div>
     <h3 id="remind-title">Send Us Your Best Shots</h3>
     <p>We're building one album from everyone's photos. Pick your favorites from the trip (the views, the pints, the people) and upload them with the camera button at the bottom right of this page.</p>
@@ -347,7 +352,7 @@ dialog{overflow-y:auto;overscroll-behavior:contain}
 
 <dialog id="help" aria-labelledby="help-title">
   <div class="sheet">
-    <div class="grab"></div>
+    <div class="grab"></div><button type="button" class="sheet-x" aria-label="Close"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></button>
     <div class="eyebrow">Save this</div>
     <h3 id="help-title">Help &amp; Contacts</h3>
 
@@ -412,7 +417,7 @@ const DAYS = [
       fact:{t:"Funkatorium", p:["This was the East Coast's first taproom dedicated entirely to sour and funky beer. More than 500 barrels age in the building, and you're drinking right next to them.","The name Wicked Weed comes from King Henry VIII, who is said to have called hops \"a wicked and pernicious weed\" that spoiled good English ale."]}},
     { time:"7:15 pm", kind:"food", tags:[["Dinner reservation","res"]], name:"Soprana Rooftop Cucina",
       blurb:"Brick-oven pizza and Alpine-Italian plates on the 7th floor, a short walk from the hotel.",
-      url:"https://sopranarooftop.com/",
+      url:"https://sopranarooftop.com/#menu", urlLabel:"Menu",
       label:"Good orders",
       picks:[["A brick-oven pizza","The house specialty", null, [
                ["The Asheville","A diner favorite: local Chop Shop pepperoni, mozzarella and Bee Charmer Smokin' Hot Honey"],
@@ -470,7 +475,7 @@ const DAYS = [
       fact:{t:"Hi-Wire", p:["Hi-Wire Lager beat out 80 entries in its category to take silver at the 2025 World Beer Cup, which many consider the Olympics of beer. Hi-Wire has also won Great American Beer Festival gold twice: for a German-style märzen in 2016 and a sour brown ale aged on palo santo wood in 2019.","Two college roommates opened this taproom in 2013 in a 1947 building, using equipment bought from a brewery that had closed. The circus theme is about balance in the beer, and about Asheville's slightly wild beer scene."]}},
     { time:"6:00 pm", kind:"food", tags:[["Dinner reservation","res"]], name:"Tupelo Honey — Downtown",
       blurb:"The original location of the Southern comfort-food chain born in Asheville.",
-      url:"https://tupelohoneycafe.com/restaurant/downtown-asheville/",
+      url:"https://tupelohoneycafe.com/downtown-asheville/menu/all-day/", urlLabel:"Menu",
       label:"Good orders",
       picks:[["Fried green tomatoes","Served over goat cheese grits"],
              ["Shrimp & grits or honey-dusted fried chicken","The two dishes they're best known for"],
@@ -512,7 +517,7 @@ const DAYS = [
       fact:{t:"White squirrels", p:["Brevard is famous for its white squirrels. Local legend says they arrived in 1949 after a carnival truck overturned. The town celebrates them every May with White Squirrel Weekend, so keep an eye on the trees.","Brevard Brewing opened in 2012 as Western North Carolina's lager specialist. Lagers ferment cold and age more than twice as long as most ales, which is why few small breweries focus on them."]}},
     { kind:"food", tags:[["Lunch","food"]], name:"Hawg Wild Smokehouse",
       blurb:"Barbecue just outside Brevard, in Pisgah Forest.",
-      url:"https://hawgbbq.com/",
+      url:"https://hawgbbq.com/pisgah-forest-hawg-wild-smokehouse-and-taproom-food-menu", urlLabel:"Menu",
       label:"Good orders",
       picks:[["Chopped pork, Eastern or Western style","Consider trying Eastern while we are in the East! A more vinegar-based sauce than Texas BBQ"],
              ["Hush puppies","Regulars rave about them"],
@@ -804,6 +809,16 @@ remind.addEventListener("click", e => { if (e.target === remind) closeRemind(); 
   }
   setTimeout(() => { if (remind.showModal) remind.showModal(); else remind.setAttribute("open", ""); }, 900);
 })();
+
+// Every sheet's top-right X closes it
+document.querySelectorAll(".sheet-x").forEach(b => b.addEventListener("click", () => {
+  const d = b.closest("dialog");
+  if (d.id === "remind") { closeRemind(); return; }
+  d.close ? d.close() : d.removeAttribute("open");
+}));
+
+// "What to bring" is only useful until everyone has arrived (hidden from Tuesday on)
+if (today >= "2026-10-20") document.querySelector(".bring").hidden = true;
 
 // Collapse / expand a day
 function setDay(section, open) {
