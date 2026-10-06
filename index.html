@@ -142,6 +142,9 @@ details:not([open]) .caret{transform:rotate(-90deg)}
 .picks small{display:block;color:var(--muted);font-size:13px;line-height:1.35}
 .subpicks{list-style:none;margin:8px 0 2px;padding:0 0 0 12px;border-left:2px solid var(--line);display:grid;gap:8px}
 .subpicks b{font-size:14px}
+.subpicks li{display:grid;grid-template-columns:8.6em minmax(0,1fr);gap:2px 8px;align-items:start}
+.subname{min-width:0}
+.subnote{display:block;font-size:13px;font-weight:500;color:var(--ink);margin-top:1px}
 .award{display:inline-flex;align-items:center;gap:5px;margin-top:4px;font-size:12px;font-weight:700;color:var(--amber);background:var(--amber-soft);border-radius:6px;padding:2px 8px 2px 6px;line-height:1.3}
 .award svg{width:11px;height:13px;flex:0 0 auto}
 .ideas{margin:8px 0 0;padding:0;list-style:none;display:grid;gap:10px}
@@ -264,7 +267,7 @@ dialog{overflow-y:auto;overscroll-behavior:contain}
     </div>
 
     <details class="rules" open>
-      <summary><div class="limit sumtitle"><div class="big">2</div><p>beers per stop are covered.<br>Want a third? Feel Free! But those must be purchased on your own tab.</p></div><span class="toggle"><span class="when-open">Collapse after reading</span><span class="when-closed">Show details</span><svg class="caret" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4l4 4 4-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></summary>
+      <summary><div class="limit sumtitle"><div class="big">2</div><p>beers per stop are covered.<br>Want a third beer or a special $$ bottle? Feel Free! But those must be purchased on your own tab.</p></div><span class="toggle"><span class="when-open">Collapse after reading</span><span class="when-closed">Show details</span><svg class="caret" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4l4 4 4-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></summary>
       <ul>
         <li>Tastings that come <b>with a brewery tour</b> don't count toward your 2.</li>
         <li><b>Breakfast is on your own</b> every day.</li>
@@ -393,7 +396,7 @@ dialog{overflow-y:auto;overscroll-behavior:contain}
 </dialog>
 
 <script>
-const REQ = "Tour rules: bring your driver's license, wear closed-toe shoes and a shirt with sleeves.";
+const REQ = "Tour rules: bring your driver's license, wear closed-toe shoes and a shirt with sleeves (no tank tops).";
 const DAYS = [
  { id:"mon", date:"2026-10-19", dow:"Monday", n:"19", theme:"Arrival night · South Slope sours",
    notes:[["Check in","4:00 pm at Hotel Indigo."]],
@@ -413,7 +416,7 @@ const DAYS = [
       label:"Good orders",
       picks:[["A brick-oven pizza","The house specialty", null, [
                ["The Asheville","A diner favorite: local Chop Shop pepperoni, mozzarella and Bee Charmer Smokin' Hot Honey"],
-               ["Quattro Formaggi (4 Cheese)","A meatless option: ricotta, fresh mozzarella, fontina, Pecorino Romano, garlic confit, garlic herb cream, herbs and basil oil"]]],
+               ["Quattro Formaggi","A meatless option: ricotta, fresh mozzarella, fontina, Pecorino Romano, garlic confit, garlic herb cream, herbs and basil oil","(4 Cheese)"]]],
              ["A local draft","The tap list leans on Asheville breweries"]],
       bp:["<strong>Eats:</strong> <strong>The Fig &amp; Prosciutto</strong> or <strong>The Asheville</strong> (pepperoni and hot honey) as my pizza choice.",
           "<strong>Drinks:</strong> Multiple craft lagers on tap that will pair nicely with a spicy pie. The menu says Sierra Nevada Seasonal... Fingers crossed it's <b>Celebration Fresh Hop IPA</b>, my favorite all-time seasonal beer."],
@@ -511,7 +514,7 @@ const DAYS = [
       blurb:"Barbecue just outside Brevard, in Pisgah Forest.",
       url:"https://hawgbbq.com/",
       label:"Good orders",
-      picks:[["Chopped pork, Eastern or Western style","Try the style you don't usually get"],
+      picks:[["Chopped pork, Eastern or Western style","Consider trying Eastern while we are in the East! A more vinegar-based sauce than Texas BBQ"],
              ["Hush puppies","Regulars rave about them"],
              ["Peach cobbler","If you have room"]],
       bp:["It's North Carolina. You get pork and vinegar-based sauce. And then try not to be rude when saying that Texas' is better."],
@@ -521,7 +524,7 @@ const DAYS = [
       url:"https://sierranevada.com/visit/mills-river/taproom",
       req:true,
       picks:[["Kellerweis","Year-round Bavarian-style hefeweizen, the light pick"],
-             ["Pale Ale","The 1980 classic that helped start American craft beer","First place at the 1983 Great American Beer Festival, and many medals since"],
+             ["Pale Ale","The 1980 classic that helped start American craft beer","1st at '83 GABF, MANY medals since"],
              ["Celebration Fresh Hop IPA","Their beloved seasonal IPA since 1981, brewed with hops fresh off the vine"]],
       bp:["<b>Sierra Nevada Pale Ale</b> is my gateway. I tried one many years ago and it opened my little baby eyes to hops and the fact that beer was more than fizzy yellow water. It is the beer I will stock my garage with before the apocalypse.",
           "AND I will have a previously mentioned banger: <b>Sierra Nevada Celebration</b>."],
@@ -564,7 +567,7 @@ const DAYS = [
       url:"https://thewhalecollective.com/west-asheville-nc/",
       label:"Order tips",
       picks:[["Great bottle selection of Belgian beers","Orval, Westmalle Tripel, Oud Beersel"],
-             ["For something really special, check the Cellar List","Be forewarned: $$$ (Cantillon, 3 Fonteinen, and even Jester King!)"]],
+             ["For something really special, check the Cellar List","Be forewarned: $$$ (Cantillon, 3 Fonteinen, and even Texas' Jester King!)"]],
       fact:{t:"The Whale", p:["In beer-trading circles a \"whale\" is a rare, hard-to-find beer, and hunting those is this bar's specialty.","It was started by two Wicked Weed veterans, so you've come full circle from Monday night."]}},
     { kind:"brew", tags:[["Barrel fermented"]], name:"Cellarest Beer Project",
       blurb:"Small-batch beers fermented and lagered in wood. Garden patio on Haywood Rd.",
@@ -588,7 +591,7 @@ const DAYS = [
              ["Dunkel","Dark Munich lager, perfect for a cool river night"]],
       fact:{t:"Zillicoah", p:["Zillicoah comes from the Cherokee name for this section of the French Broad River, and the riverbank is the heart of the property. It was the first brewery in Woodfin.","Open fermentation means the beer ferments in wide, uncovered vessels, an old European technique that lets the yeast work differently and gives a softer, rounder flavor. Look for the Low Country Rice Lager made with Carolina Gold rice."]}}
    ]},
- { id:"fri", date:"2026-10-23", dow:"Friday", n:"23", theme:"Heading home", notes:[], stops:[], checkout:true }
+ { id:"fri", date:"2026-10-23", dow:"Friday", n:"23", theme:"Heading home", notes:[["Last call for photos","Upload your favorite trip photos with the camera button at the bottom right, and keep an eye out for the finished album in a future email.","alert"]], stops:[], checkout:true }
 ];
 
 const glass = '<svg class="glass" viewBox="0 0 16 20" aria-hidden="true"><path d="M2 2h12l-1.6 16H3.6Z" fill="var(--amber)" opacity=".85"/><path d="M2 2h12l-.3 3H2.3Z" fill="var(--surface)" stroke="var(--amber)" stroke-width="1"/></svg>';
@@ -624,10 +627,11 @@ DAYS.forEach(d => {
       const tags = (s.tags || []).map(([t, c]) => `<span class="tag ${c || ""}">${esc(t)}</span>`).join("");
       html += `<li class="stop ${cls}"><div class="card">${s.bp ? `<button type="button" class="egg" data-bp="${key}" aria-label="Brewer's Pick"></button>` : ""}<div class="meta">${s.time ? `<span class="time">${esc(s.time)}</span>` : ""}${tags}</div>`;
       html += `<h3>${esc(s.name)}</h3>${s.blurb ? `<p class="blurb">${esc(s.blurb)}</p>` : ""}`;
+      if (s.req) html += `<div class="req">${esc(REQ)}</div>`;
       if (s.picks) {
         html += `<div class="picks-label">${esc(s.label || "GT Recommends:")}</div><ul class="picks">`;
         s.picks.forEach(([b, t, award, subs]) => {
-          const sub = subs ? `<ul class="subpicks">${subs.map(([sb, st]) => `<li><b>${esc(sb)}</b><small>${esc(st)}</small></li>`).join("")}</ul>` : "";
+          const sub = subs ? `<ul class="subpicks">${subs.map(([sb, st, sn]) => `<li><div class="subname"><b>${esc(sb)}</b>${sn ? `<span class="subnote">${esc(sn)}</span>` : ""}</div><small>${esc(st)}</small></li>`).join("")}</ul>` : "";
           html += `<li>${glass}<div><b>${esc(b)}</b><small>${esc(t)}</small>${award ? `<span class="award">${medal}${esc(award)}</span>` : ""}${sub}</div></li>`;
         });
         html += `</ul>`;
@@ -639,7 +643,6 @@ DAYS.forEach(d => {
           html += `</ul>`;
         });
       }
-      if (s.req) html += `<div class="req">${esc(REQ)}</div>`;
       if (s.url || s.fact) {
         html += `<div class="actions">`;
         if (s.fact) html += `<button class="btn" type="button" data-fact="${key}">Learn more</button>`;
