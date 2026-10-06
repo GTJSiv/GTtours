@@ -59,7 +59,8 @@ h1 span{color:var(--amber)}
 .daynav a.today{background:var(--spruce);border-color:var(--spruce);color:var(--surface)}
 
 /* Info blocks */
-section{scroll-margin-top:64px}
+section{scroll-margin-top:calc(72px + env(safe-area-inset-top,0px))}
+.daynav a[aria-current]{border-color:var(--spruce);box-shadow:inset 0 0 0 1px var(--spruce)}
 .block{margin-top:24px}
 h2{font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:30px;line-height:1;margin:0;letter-spacing:.02em}
 .sub{color:var(--muted);font-size:14px;margin-top:4px}
@@ -67,7 +68,7 @@ h2{font-family:var(--display);font-weight:700;text-transform:uppercase;font-size
 .hotel b{display:block}
 .hotel small{color:var(--muted)}
 .btn{display:inline-flex;align-items:center;gap:6px;font:600 14px var(--body);border-radius:999px;padding:8px 14px;border:1px solid var(--spruce);color:var(--spruce);background:transparent;text-decoration:none;cursor:pointer;white-space:nowrap}
-.btn:focus-visible,.daynav a:focus-visible,.pip:focus-visible,.check input:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
+.btn:focus-visible,.daynav a:focus-visible,.check input:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
 
 .rules{margin-top:12px;background:var(--amber-soft);border-radius:14px;padding:16px}
 .rules h3{margin:0 0 8px;font-size:13px;letter-spacing:.12em;text-transform:uppercase}
@@ -103,6 +104,17 @@ details:not([open]) .caret{transform:rotate(-90deg)}
 .dayhead .dnum{font-family:var(--display);font-weight:700;font-size:48px;line-height:.85;color:var(--amber);font-variant-numeric:tabular-nums}
 .dayhead h2{font-size:28px}
 .dayhead .theme{color:var(--muted);font-size:14px;font-weight:600}
+.dayhead .dtitle{flex:1;min-width:0}
+.daytoggle{align-self:center;flex:0 0 auto;display:flex;align-items:center;gap:6px;font:600 12px var(--body);color:var(--muted);background:transparent;border:1px solid var(--line);border-radius:999px;padding:5px 10px;cursor:pointer}
+.daytoggle:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
+.daytoggle .when-closed{display:none}
+.daytoggle[aria-expanded="false"] .when-open{display:none}
+.daytoggle[aria-expanded="false"] .when-closed{display:inline}
+.daytoggle[aria-expanded="false"] .caret{transform:rotate(-90deg)}
+.day.past .dnum{color:var(--muted)}
+.donetag,.todaytag{display:inline-block;margin-right:8px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;border-radius:6px;padding:1px 7px;vertical-align:1px}
+.donetag{background:var(--spruce-soft);color:var(--muted)}
+.todaytag{background:var(--leaf);color:var(--surface)}
 .note{margin-top:12px;font-size:14px;color:var(--muted);display:flex;gap:8px;align-items:flex-start}
 .note b{color:var(--ink)}
 
@@ -134,15 +146,11 @@ details:not([open]) .caret{transform:rotate(-90deg)}
 .ideas a{font-weight:700;font-size:15px}
 .ideas .hours{display:inline-block;font-size:12px;font-weight:700;font-variant-numeric:tabular-nums;color:var(--spruce);background:var(--spruce-soft);border-radius:6px;padding:1px 7px;margin-left:4px;white-space:nowrap}
 .ideas small{display:block;color:var(--muted);font-size:13px;line-height:1.35}
-.picks-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:12px}
-.picks-head .picks-label{margin-top:0}
-.bp-stamp{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;justify-content:center;width:68px;height:68px;margin:-6px 2px -10px 0;padding:0;border-radius:50%;cursor:pointer;background:transparent;color:var(--leaf);border:2.5px solid var(--leaf);box-shadow:inset 0 0 0 3px var(--surface),inset 0 0 0 4.5px var(--leaf);font-family:var(--display);font-weight:700;text-transform:uppercase;line-height:.95;transform:rotate(-12deg);transition:transform .15s ease}
-.bp-stamp span:first-child{font-size:13px;letter-spacing:.06em}
-.bp-stamp span:last-child{font-size:20px;letter-spacing:.08em}
-.bp-stamp:hover{transform:rotate(-6deg) scale(1.05)}
-.bp-stamp:active{transform:rotate(-12deg) scale(.95)}
-.bp-stamp:focus-visible{outline:3px solid var(--amber);outline-offset:3px}
-@media (prefers-reduced-motion:reduce){.bp-stamp{transition:none}}
+.card{position:relative}
+/* Brewer's Pick easter egg: an invisible tap target in each card's top-right corner */
+.egg{position:absolute;top:0;right:0;width:24px;height:24px;padding:0;border:0;background:transparent;cursor:default;border-top-right-radius:14px;-webkit-tap-highlight-color:transparent;z-index:1}
+.egg:focus{outline:none}
+.egg:focus-visible{outline:2px dashed var(--line);outline-offset:-6px}
 .is-bp .eyebrow{color:var(--leaf)}
 .is-bp #sheet-body b{color:var(--amber)}
 .byline{display:flex;align-items:center;gap:10px;margin:-4px 0 14px;padding:10px 12px;border-radius:10px;background:var(--spruce-soft);font-size:13px;line-height:1.35;color:var(--muted)}
@@ -153,12 +161,6 @@ details:not([open]) .caret{transform:rotate(-90deg)}
 .req{margin-top:10px;font-size:13px;background:var(--spruce-soft);color:var(--spruce);border-radius:8px;padding:6px 10px;font-weight:600}
 .actions{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:14px}
 .actions .links{display:flex;gap:14px;font-size:14px;font-weight:600}
-.tally{display:flex;align-items:center;gap:6px;margin-left:auto}
-.tally span{font-size:12px;color:var(--muted);font-weight:600}
-.pip{width:24px;height:24px;border-radius:50%;border:2px solid var(--amber);background:transparent;cursor:pointer;padding:0}
-.pip[aria-pressed="true"]{background:var(--amber)}
-.pip.extra{border-style:dashed;border-color:var(--muted)}
-.pip.extra[aria-pressed="true"]{background:var(--muted)}
 
 .checkout{margin-top:14px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;font-weight:600}
 footer{margin-top:40px;color:var(--muted);font-size:13px;text-align:center}
@@ -173,6 +175,27 @@ dialog::backdrop{background:rgba(10,20,20,.5)}
 .sheet p{margin:0 0 12px}
 .sheet .close{width:100%;justify-content:center;margin-top:6px;background:var(--spruce);color:var(--surface)}
 dialog{overflow-y:auto;overscroll-behavior:contain}
+.fab{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:6;width:58px;height:58px;border-radius:50%;border:0;padding:0;display:grid;place-items:center;cursor:pointer;background:var(--band);color:var(--band-stamp);box-shadow:0 6px 18px rgba(10,30,30,.3),0 0 0 3px var(--bg)}
+.fab svg{width:28px;height:28px}
+.fab:focus-visible{outline:3px solid var(--amber);outline-offset:3px}
+.wrap{padding-bottom:96px}
+.psub{color:var(--muted);margin:-4px 0 6px}
+.plabel{display:block;font-weight:600;font-size:14px;margin:14px 0 6px}
+.plabel span{color:var(--muted);font-weight:400}
+.pinput{width:100%;font:16px var(--body);color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.pinput:focus-visible{outline:3px solid var(--amber);outline-offset:1px}
+.pick{display:flex;align-items:center;justify-content:center;gap:8px;padding:16px;border:2px dashed var(--line);border-radius:12px;color:var(--spruce);font-weight:700;cursor:pointer}
+.pick svg{width:20px;height:20px}
+.vh{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+#photo-files:focus-visible + .pick{outline:3px solid var(--amber)}
+.sheet .close:disabled{opacity:.45;cursor:default}
+.plog{list-style:none;margin:12px 0 0;padding:0;font-size:14px}
+.plog li{display:flex;justify-content:space-between;gap:10px;padding:6px 0;border-bottom:1px solid var(--line)}
+.plog li span:first-child{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.plog .ok{color:var(--spruce);font-weight:700}
+.plog .bad{color:var(--leaf);font-weight:700}
+.pnote{background:var(--spruce-soft);border-radius:10px;padding:12px;margin:12px 0 0}
+.sheet .plain{width:100%;justify-content:center;margin-top:12px}
 .helpchip{flex:0 0 auto;font:700 14px var(--body);border-radius:999px;padding:6px 12px;border:1px solid var(--leaf);background:var(--leaf);color:var(--surface);cursor:pointer;white-space:nowrap}
 .helpchip:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
 .hgroup{border-top:1px solid var(--line);padding-block:12px}
@@ -238,7 +261,6 @@ dialog{overflow-y:auto;overscroll-behavior:contain}
         <li>Tastings that come <b>with a brewery tour</b> don't count toward your 2.</li>
         <li><b>Breakfast is on your own</b> every day.</li>
         <li><b>Lunch &amp; dinner:</b> order what looks good. Just be reasonable.</li>
-        <li>Feel free to tap the circles on each brewery card to keep count if you like. They're saved on your phone only.</li>
         <li><b>No open drinks on the street.</b> Finish your beer before you leave a brewery.</li>
         <li>Asheville sits at about 2,100 feet. <b>Drink water</b> between beers.</li>
         <li>Expect highs in the 60s and nights in the 40s. Bring a layer.</li>
@@ -269,6 +291,34 @@ dialog{overflow-y:auto;overscroll-behavior:contain}
     <div class="byline" id="sheet-byline" hidden><span class="bp-mini" aria-hidden="true">BP</span><span><b>Jeramie</b>Grain Theory Brewer &amp; Certified Beer Expert (Snob)</span></div>
     <div id="sheet-body"></div>
     <button class="btn close" id="sheet-close" type="button">Got it</button>
+  </div>
+</dialog>
+
+<button type="button" class="fab" id="photo-open" aria-label="Share your trip photos">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8.5A2.5 2.5 0 0 1 6.5 6h1.6l1.2-1.8A1.5 1.5 0 0 1 10.5 3.5h3a1.5 1.5 0 0 1 1.2.7L15.9 6h1.6A2.5 2.5 0 0 1 20 8.5v8a2.5 2.5 0 0 1-2.5 2.5h-11A2.5 2.5 0 0 1 4 16.5z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="12" cy="12.3" r="3.6" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>
+</button>
+
+<dialog id="photos" aria-labelledby="photos-title">
+  <div class="sheet">
+    <div class="grab"></div>
+    <div class="eyebrow">Group album</div>
+    <h3 id="photos-title">Share Your Photos</h3>
+    <p class="psub">Add your trip photos to our shared Grain Theory album. After the trip we'll put everyone's shots together.</p>
+    <div id="photo-ready">
+      <label class="plabel" for="photo-name">Your name <span>(optional)</span></label>
+      <input type="text" id="photo-name" class="pinput" maxlength="40" autocomplete="name" placeholder="So we know who took what">
+      <label class="plabel" for="photo-files">Photos</label>
+      <input type="file" id="photo-files" accept="image/*" multiple class="vh">
+      <label class="pick" for="photo-files">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <span id="photo-pick-text">Choose photos</span>
+      </label>
+      <button type="button" class="btn close" id="photo-send" disabled>Upload photos</button>
+      <ul class="plog" id="photo-log"></ul>
+    </div>
+    <p class="pnote" id="photo-soon" hidden>Photo uploads open soon. Check back before the trip!</p>
+    <p class="pnote" id="photo-out" hidden>Uploading doesn't work inside this preview. <a id="photo-out-link" href="#" target="_blank" rel="noopener">Open the photo uploader ↗</a></p>
+    <button class="btn plain" id="photos-close" type="button">Close</button>
   </div>
 </dialog>
 
@@ -450,8 +500,8 @@ const DAYS = [
       url:"https://sierranevada.com/visit/mills-river/taproom",
       req:true,
       picks:[["Kellerweis","Year-round Bavarian-style hefeweizen, the light pick"],
-             ["Pale Ale","The 1980 classic that helped start American craft beer","First place at the 1983 Great American Beer Festival, and many medals since. Also Jeramie's Desert Island Beer."],
-             ["Hazy Little Thing","Their year-round hazy IPA"]],
+             ["Pale Ale","The 1980 classic that helped start American craft beer","First place at the 1983 Great American Beer Festival, and many medals since"],
+             ["Celebration Fresh Hop IPA","Their beloved seasonal IPA since 1981, brewed with hops fresh off the vine"]],
       bp:["<b>Sierra Nevada Pale Ale</b> is my gateway. I tried one many years ago and it opened my little baby eyes to hops and the fact that beer was more than fizzy yellow water. It is the beer I will stock my garage with before the apocalypse.",
           "AND I will have a previously mentioned banger: <b>Sierra Nevada Celebration</b>."],
       fact:{t:"Sierra Nevada", p:["Sierra Nevada has won 33 Great American Beer Festival medals, tied for the most of any brewery. This was the first production brewery ever to earn LEED Platinum certification, and its 20-barrel pilot brewhouse in the taproom makes beers you can only get here.","Ask about Celly Drippins. It's made from the drippings of the hop bags used for Celebration, and for years it was a secret tap at this taproom. Celebration season starts in the fall, so you might get lucky."]}},
@@ -467,10 +517,11 @@ const DAYS = [
       ideas:[
         ["Near Wedge at Foundation (River Arts District)", [
           ["All Souls Pizza","Popular wood-fired pizza a few minutes away on Clingman Ave.","https://www.google.com/maps/search/?api=1&query=All+Souls+Pizza+Asheville+NC","4:30–9 pm"],
-          ["Plēb Urban Winery","Urban winery on Lyman St in the River Arts District, if anyone needs a break from beer.","https://www.google.com/maps/search/?api=1&query=Pleb+Urban+Winery+289+Lyman+St+Asheville+NC","2–8 pm"]
+          ["Plēb Urban Winery","Urban winery on Lyman St in the River Arts District, if anyone needs a break from beer.","https://www.google.com/maps/search/?api=1&query=Pleb+Urban+Winery+289+Lyman+St+Asheville+NC","2–8 pm"],
+          ["Ace & Eagle at Hi-Wire's RAD Beer Garden","Pickleball courts, golf simulators and billiards on Hi-Wire's River Arts campus, with the beer garden right there. Good for a group. Book a court or simulator ahead.","https://www.google.com/maps/search/?api=1&query=Ace+%26+Eagle+284+Lyman+St+Asheville+NC","Noon–9 pm"]
         ]],
         ["Back near the hotel", [
-          ["Wicked Weed Brewpub","The original Wicked Weed at 91 Biltmore Ave, with a full kitchen. Pernicious IPA started here.","https://www.google.com/maps/search/?api=1&query=Wicked+Weed+Brewing+91+Biltmore+Ave+Asheville","Noon–10 pm"],
+          ["Battery Park Book Exchange & Champagne Bar","A used bookstore with a champagne and wine bar tucked inside the 1929 Grove Arcade, a block from the hotel. Grab a glass and get lost in the stacks.","https://www.google.com/maps/search/?api=1&query=Battery+Park+Book+Exchange+1+Page+Ave+Asheville+NC","Noon–8 pm"],
           ["Asheville Pizza & Brewing (Merrimon Ave)","Pizza, house beer and $3 movies you can watch with your beer. A short ride north.","https://www.ashevillebrewing.com/movies/","11:30 am–9 pm"],
           ["DSSOLVR","If you skipped Tuesday's late-night add-on, here's your second chance.","https://www.google.com/maps/search/?api=1&query=DSSOLVR+63+N+Lexington+Ave+Asheville+NC","3–9 pm"],
           ["Pack's Tavern","Big local tap list and pub food on Pack Square.","https://www.google.com/maps/search/?api=1&query=Pack%27s+Tavern+Asheville+NC","11:30 am–10 pm"]
@@ -528,11 +579,18 @@ let store = {};
 try { store = JSON.parse(localStorage.getItem("avl-trip") || "{}"); } catch(e) {}
 const save = () => { try { localStorage.setItem("avl-trip", JSON.stringify(store)); } catch(e) {} };
 
+// Which day is "today" (#preview-20261021 in the link previews a trip day)
+const now = new Date();
+let today = now.getFullYear() + "-" + String(now.getMonth()+1).padStart(2,"0") + "-" + String(now.getDate()).padStart(2,"0");
+const pv = location.hash.match(/^#preview-(\d{4})(\d{2})(\d{2})$/);
+if (pv) today = pv[1] + "-" + pv[2] + "-" + pv[3];
+
 const facts = {};
 const picksBy = {};
 let html = "";
 DAYS.forEach(d => {
-  html += `<section class="day" id="${d.id}"><div class="dayhead"><div class="dnum">${d.n}</div><div><h2>${d.dow}</h2><div class="theme">${esc(d.theme)}</div></div></div>`;
+  const past = d.date < today, isToday = d.date === today;
+  html += `<section class="day${past ? " past" : ""}${isToday ? " is-today" : ""}" id="${d.id}"><div class="dayhead"><div class="dnum">${d.n}</div><div class="dtitle"><h2>${d.dow}</h2><div class="theme">${past ? `<span class="donetag">Done</span>` : ""}${isToday ? `<span class="todaytag">Today</span>` : ""}${esc(d.theme)}</div></div><button type="button" class="daytoggle" aria-expanded="${!past}" aria-controls="${d.id}-body"><span class="when-open">Hide</span><span class="when-closed">Show</span><svg class="caret" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4l4 4 4-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div><div class="daybody" id="${d.id}-body"${past ? " hidden" : ""}>`;
   d.notes.forEach(([b, t, c]) => { html += `<div class="note${c ? " " + c : ""}"><span><b>${esc(b)}:</b> ${esc(t)}</span></div>`; });
   if (d.checkout) html += `<div class="checkout">Check out of Hotel Indigo by 11:00 am. Safe travels!</div>`;
   if (d.stops.length) {
@@ -543,14 +601,10 @@ DAYS.forEach(d => {
       if (s.bp) picksBy[key] = { t: s.name.replace(/ — .*/, ""), p: s.bp };
       const cls = s.kind === "food" ? "food" : (s.kind === "addon" ? "addon" : "");
       const tags = (s.tags || []).map(([t, c]) => `<span class="tag ${c || ""}">${esc(t)}</span>`).join("");
-      html += `<li class="stop ${cls}"><div class="card"><div class="meta">${s.time ? `<span class="time">${esc(s.time)}</span>` : ""}${tags}</div>`;
+      html += `<li class="stop ${cls}"><div class="card">${s.bp ? `<button type="button" class="egg" data-bp="${key}" aria-label="Brewer's Pick"></button>` : ""}<div class="meta">${s.time ? `<span class="time">${esc(s.time)}</span>` : ""}${tags}</div>`;
       html += `<h3>${esc(s.name)}</h3>${s.blurb ? `<p class="blurb">${esc(s.blurb)}</p>` : ""}`;
       if (s.picks) {
-        const lbl = `<div class="picks-label">${esc(s.label || "GT Recommends:")}</div>`;
-        html += s.bp
-          ? `<div class="picks-head">${lbl}<button type="button" class="bp-stamp" data-bp="${key}" aria-label="Brewer's Pick: Jeramie's recommendation for ${esc(s.name)}"><span>Brewer's</span><span>Pick</span></button></div>`
-          : lbl;
-        html += `<ul class="picks">`;
+        html += `<div class="picks-label">${esc(s.label || "GT Recommends:")}</div><ul class="picks">`;
         s.picks.forEach(([b, t, award]) => { html += `<li>${glass}<div><b>${esc(b)}</b><small>${esc(t)}</small>${award ? `<span class="award">${medal}${esc(award)}</span>` : ""}</div></li>`; });
         html += `</ul>`;
       }
@@ -569,35 +623,15 @@ DAYS.forEach(d => {
         if (s.url) html += `<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.urlLabel || "Website")} ↗</a>`;
         if (s.kind !== "scenic" && s.kind !== "free") html += `<a href="${mapUrl(s.name.replace(/ — .*/, "").replace(/\(.*\)/, ""))}" target="_blank" rel="noopener">Map ↗</a>`;
         html += `</span>`;
-        if (s.kind === "brew" || s.kind === "addon") {
-          html += `<span class="tally" role="group" aria-label="Beers at ${esc(s.name)}"><span>Beers</span>`;
-          [0,1,2,3,4].forEach(n => {
-            const on = !!(store[key] && store[key][n]);
-            html += `<button type="button" class="pip${n>=2?" extra":""}" data-key="${key}" data-n="${n}" aria-pressed="${on}" aria-label="${n>=2?"Beer "+(n+1)+", on you":"Beer "+(n+1)+", covered"}"></button>`;
-          });
-          html += `</span>`;
-        }
         html += `</div>`;
       }
       html += `</div></li>`;
     });
     html += `</ol>`;
   }
-  html += `</section>`;
+  html += `</div></section>`;
 });
 document.getElementById("days").innerHTML = html;
-
-// Beer tally
-document.addEventListener("click", e => {
-  const pip = e.target.closest(".pip");
-  if (pip) {
-    const k = pip.dataset.key, n = +pip.dataset.n;
-    store[k] = store[k] || [];
-    store[k][n] = !store[k][n];
-    pip.setAttribute("aria-pressed", store[k][n]);
-    save();
-  }
-});
 
 // Packing checklist
 document.querySelectorAll(".bring input").forEach(cb => {
@@ -640,9 +674,106 @@ document.getElementById("help-open").addEventListener("click", () => { if (help.
 document.getElementById("help-close").addEventListener("click", () => help.close ? help.close() : help.removeAttribute("open"));
 help.addEventListener("click", e => { if (e.target === help) help.close(); });
 
-// Highlight today during the trip
-const t = new Date(), today = t.getFullYear() + "-" + String(t.getMonth()+1).padStart(2,"0") + "-" + String(t.getDate()).padStart(2,"0");
+// Day buttons: scroll in-page with script, since plain #hash links don't reliably move the page inside embedded viewers
+const smooth = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+document.querySelectorAll('.daynav a[href^="#"]').forEach(a => {
+  a.addEventListener("click", e => {
+    const el = document.getElementById(a.getAttribute("href").slice(1));
+    if (!el) return;
+    e.preventDefault();
+    if (el.classList.contains("day")) setDay(el, true);
+    el.scrollIntoView({ behavior: smooth ? "smooth" : "auto", block: "start" });
+    document.querySelectorAll(".daynav a").forEach(x => x.removeAttribute("aria-current"));
+    a.setAttribute("aria-current", "true");
+  });
+});
+
+// Photo drop: sends photos to the Grain Theory Google Apps Script, which saves them in the shared Drive folder.
+// Paste the script's Web app URL (ends in /exec) between the quotes.
+const PHOTO_UPLOAD_URL = "https://script.google.com/macros/s/AKfycbxSmBR77GQERfRCmImimTd8YpoPKd3CRLQZdm3mozI_SJLL-AjKM0oB6_WQ_ILQ4yYliw/exec";
+const photos = document.getElementById("photos");
+const pName = document.getElementById("photo-name"), pFiles = document.getElementById("photo-files");
+const pSend = document.getElementById("photo-send"), pLog = document.getElementById("photo-log");
+try { pName.value = localStorage.getItem("gt-name") || ""; } catch (e) {}
+document.getElementById("photo-open").addEventListener("click", () => {
+  document.getElementById("photo-ready").hidden = !PHOTO_UPLOAD_URL;
+  document.getElementById("photo-soon").hidden = !!PHOTO_UPLOAD_URL;
+  if (photos.showModal) photos.showModal(); else photos.setAttribute("open", "");
+});
+document.getElementById("photos-close").addEventListener("click", () => photos.close ? photos.close() : photos.removeAttribute("open"));
+photos.addEventListener("click", e => { if (e.target === photos) photos.close(); });
+pFiles.addEventListener("change", () => {
+  const n = pFiles.files.length;
+  document.getElementById("photo-pick-text").textContent = n ? `${n} photo${n > 1 ? "s" : ""} selected · tap to change` : "Choose photos";
+  pSend.disabled = !n;
+});
+// Shrink big photos to 3000px JPEG so uploads are quick on cell data; fall back to the original if the browser can't decode it.
+function preparePhoto(file) {
+  return new Promise(resolve => {
+    const url = URL.createObjectURL(file), img = new Image();
+    img.onload = () => {
+      const s = Math.min(1, 3000 / Math.max(img.width, img.height)), c = document.createElement("canvas");
+      c.width = Math.round(img.width * s); c.height = Math.round(img.height * s);
+      c.getContext("2d").drawImage(img, 0, 0, c.width, c.height);
+      URL.revokeObjectURL(url);
+      resolve({ data: c.toDataURL("image/jpeg", 0.9).split(",")[1], mimeType: "image/jpeg", filename: file.name.replace(/\.[^.]+$/, "") + ".jpg" });
+    };
+    img.onerror = () => {
+      URL.revokeObjectURL(url);
+      const r = new FileReader();
+      r.onload = () => resolve({ data: String(r.result).split(",")[1], mimeType: file.type || "image/jpeg", filename: file.name });
+      r.readAsDataURL(file);
+    };
+    img.src = url;
+  });
+}
+pSend.addEventListener("click", async () => {
+  const files = [...pFiles.files];
+  if (!files.length || !PHOTO_UPLOAD_URL) return;
+  try { localStorage.setItem("gt-name", pName.value); } catch (e) {}
+  pSend.disabled = true; pSend.textContent = "Uploading…";
+  let blocked = false;
+  for (const file of files) {
+    const li = document.createElement("li");
+    li.innerHTML = `<span>${esc(file.name)}</span><span>Sending…</span>`;
+    pLog.appendChild(li);
+    const status = li.lastChild;
+    try {
+      const p = await preparePhoto(file);
+      p.name = pName.value;
+      const res = await fetch(PHOTO_UPLOAD_URL, { method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify(p) });
+      const out = await res.json().catch(() => ({ ok: res.ok }));
+      if (out.ok) { status.textContent = "Uploaded ✓"; status.className = "ok"; }
+      else { status.textContent = out.error || "Didn't upload"; status.className = "bad"; }
+    } catch (err) {
+      status.textContent = "Didn't upload"; status.className = "bad"; blocked = true;
+    }
+  }
+  if (blocked) {
+    document.getElementById("photo-out-link").href = PHOTO_UPLOAD_URL;
+    document.getElementById("photo-out").hidden = false;
+  }
+  pFiles.value = ""; document.getElementById("photo-pick-text").textContent = "Choose more photos";
+  pSend.textContent = "Upload photos";
+});
+
+// Collapse / expand a day
+function setDay(section, open) {
+  const body = section.querySelector(".daybody"), btn = section.querySelector(".daytoggle");
+  body.hidden = !open; btn.setAttribute("aria-expanded", open);
+}
+document.addEventListener("click", e => {
+  const b = e.target.closest(".daytoggle");
+  if (b) setDay(b.closest(".day"), b.getAttribute("aria-expanded") !== "true");
+});
+
+// Highlight today in the day bar and bring it into view on load
 document.querySelectorAll(".daynav a[data-date]").forEach(a => { if (a.dataset.date === today) { a.classList.add("today"); a.textContent += " · Today"; } });
+const todayEl = document.querySelector(".day.is-today");
+if (todayEl) {
+  const go = () => todayEl.scrollIntoView({ block: "start" });
+  if (document.readyState === "complete") go(); else window.addEventListener("load", go, { once: true });
+}
 </script>
 
 </body>
