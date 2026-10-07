@@ -422,7 +422,7 @@ const DAYS = [
       picks:[["A brick-oven pizza","The house specialty", null, [
                ["The Asheville","A diner favorite: local Chop Shop pepperoni, mozzarella and Bee Charmer Smokin' Hot Honey"],
                ["Quattro Formaggi","A meatless option: ricotta, fresh mozzarella, fontina, Pecorino Romano, garlic confit, garlic herb cream, herbs and basil oil","(4 Cheese)"]]],
-             ["A local draft","The tap list leans on Asheville breweries"]],
+             ["A local draft","The tap list leans on Asheville breweries", null, null, "drink"]],
       bp:["<strong>Eats:</strong> <strong>The Fig &amp; Prosciutto</strong> or <strong>The Asheville</strong> (pepperoni and hot honey) as my pizza choice.",
           "<strong>Drinks:</strong> Multiple craft lagers on tap that will pair nicely with a spicy pie. The menu says Sierra Nevada Seasonal... Fingers crossed it's <b>Celebration Fresh Hop IPA</b>, my favorite all-time seasonal beer."],
       fact:{t:"Soprana", p:["Soprana sits on top of the Embassy Suites at 192 Haywood St, about a block from Hotel Indigo. It opened in spring 2024 and was selected for the MICHELIN Guide American South in 2025.","Grab a seat near the windows or out on the terrace. You'll be looking west toward the Blue Ridge."]}},
@@ -439,9 +439,11 @@ const DAYS = [
    stops:[
     { time:"11:00 am", kind:"brew", tags:[["Tour + pizza lunch","res"]], name:"White Labs Brewing Co.",
       blurb:"A brewpub run by one of the world's big brewing-yeast labs. The tour and pizza lunch are reserved.",
-      url:"https://whitelabsbrewingco.com/asheville-nc/",
+      url:"https://whitelabsbrewingco.com/wp-content/uploads/2026/10/WLBC-AVL-Food-Menu-Fall-2026_updated.pdf", urlLabel:"Menu",
       picks:[["FrankenStout WLP096","Made with a blend of 96 different yeast strains! Big, bold, & Complex."],
-             ["The house lager","For something light after the tour"]],
+             ["The house lager","For something light after the tour"],
+             ["A 12\" wood-fired pizza","The dough is fermented with brewer's yeast", null, null, "food"],
+             ["Or the Tuesday Smash Burger & Beer special","*Vegan option available too", null, null, "food"]],
       bp:["<strong>Yeast flight:</strong> four 4 oz pours. Choose 2 pairs. SAME RECIPE. 2 DIFFERENT YEASTS = 2 DIFFERENT BEERS.",
           "This stop was a must for David and myself. To be able to try multiple different beers fermented on separate yeast strains is a dream come true for the analytical, beer-logged minds of GT. Pick your poison and get both versions to nerd out with us!",
           "I'm starting with the <b>American/Mexican Lager</b> flight, followed by the <b>Hazy/West Coast IPA</b> flight."],
@@ -599,6 +601,8 @@ const DAYS = [
  { id:"fri", date:"2026-10-23", dow:"Friday", n:"23", theme:"Heading home", notes:[["Last call for photos","Upload your favorite trip photos with the camera button at the bottom right, and keep an eye out for the finished album in a future email.","alert"]], stops:[], checkout:true }
 ];
 
+// Fork and knife for food picks
+const plate = '<svg class="glass" viewBox="0 0 16 20" aria-hidden="true"><path d="M3 1.5v5.5a2 2 0 0 0 1.4 1.9V18.5" fill="none" stroke="var(--amber)" stroke-width="1.6" stroke-linecap="round"/><path d="M1.6 1.5v5M4.4 1.5v5M3 1.5v5" stroke="var(--amber)" stroke-width="1.2" stroke-linecap="round"/><path d="M12.5 18.5V1.5c-2 1.2-3 3.6-3 6.6 0 1.6.9 2.7 3 2.9" fill="var(--amber)" opacity=".85" stroke="var(--amber)" stroke-width="1.2" stroke-linejoin="round"/></svg>';
 const glass = '<svg class="glass" viewBox="0 0 16 20" aria-hidden="true"><path d="M2 2h12l-1.6 16H3.6Z" fill="var(--amber)" opacity=".85"/><path d="M2 2h12l-.3 3H2.3Z" fill="var(--surface)" stroke="var(--amber)" stroke-width="1"/></svg>';
 const medal = '<svg viewBox="0 0 12 14" aria-hidden="true"><path d="M3 0h2l1 4 1-4h2L7.5 5.5 6 5 4.5 5.5Z" fill="var(--leaf)"/><circle cx="6" cy="9.5" r="4" fill="var(--amber)"/></svg>';
 const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
@@ -635,9 +639,10 @@ DAYS.forEach(d => {
       if (s.req) html += `<div class="req">${esc(REQ)}</div>`;
       if (s.picks) {
         html += `<div class="picks-label">${esc(s.label || "GT Recommends:")}</div><ul class="picks">`;
-        s.picks.forEach(([b, t, award, subs]) => {
+        s.picks.forEach(([b, t, award, subs, type]) => {
+          const icon = (type || (s.kind === "food" ? "food" : "drink")) === "food" ? plate : glass;
           const sub = subs ? `<ul class="subpicks">${subs.map(([sb, st, sn]) => `<li><div class="subname"><b>${esc(sb)}</b>${sn ? `<span class="subnote">${esc(sn)}</span>` : ""}</div><small>${esc(st)}</small></li>`).join("")}</ul>` : "";
-          html += `<li>${glass}<div><b>${esc(b)}</b><small>${esc(t)}</small>${award ? `<span class="award">${medal}${esc(award)}</span>` : ""}${sub}</div></li>`;
+          html += `<li>${icon}<div><b>${esc(b)}</b><small>${esc(t)}</small>${award ? `<span class="award">${medal}${esc(award)}</span>` : ""}${sub}</div></li>`;
         });
         html += `</ul>`;
       }
