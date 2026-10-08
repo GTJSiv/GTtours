@@ -560,15 +560,28 @@ const DAYS = [
       ]}
    ]},
  { id:"thu", date:"2026-10-22", dow:"Thursday", n:"22", theme:"West Asheville, Weaverville & Woodfin",
-   notes:[["Breakfast","On your own."],["Route","New Belgium, The Whale and Cellarest are close together in West Asheville. Leveller is in downtown Weaverville and Zillicoah is on the river in Woodfin, both north of town on the way back."]],
+   notes:[["Meet at 10:15 am","In the hotel lobby. We'll head to Ultra Coffeebar together, about a 30 minute walk.","alert"],["Route","New Belgium, The Whale and Cellarest are close together in West Asheville. Leveller is in downtown Weaverville and Zillicoah is on the river in Woodfin, both north of town on the way back."]],
    stops:[
-    { kind:"brew", tags:[["Brewery tour"]], name:"New Belgium — Asheville",
+    { time:"10:45 am", kind:"food", tags:[["Brunch","food"],["Leave by 11:45 am","opt"]], name:"Ultra Coffeebar",
+      blurb:"Specialty coffee bar and café on Clingman Ave in the River Arts District, a short walk from New Belgium.",
+      url:"https://ultracoffeebar.com/", urlLabel:"Menu",
+      label:"Good orders",
+      picks:[["Nitro cold brew","Creamy and cascading, poured like a Guinness. Fitting for this crowd", null, null, "drink"],
+             ["The Ella","Egg, fresh mozzarella, tomato and basil pesto on ciabatta"],
+             ["Fig & Brie Panini","A sweet-and-savory vegetarian pick"]]},
+    { time:"12:15 pm", kind:"brew", tags:[["Tour reserved","res"],["Open noon–8 pm · food trucks","opt"]], name:"New Belgium — Asheville",
       blurb:"The Fat Tire brewery's East Coast home on the French Broad River.",
       url:"https://www.newbelgium.com/visit/asheville/",
       req:true,
       picks:[["Fat Tire & Voodoo Ranger","The amber that built the company and the current #1 craft beer brand in the country"],
              ["La Folie","Sour brown ale aged in French oak foeders, their specialty","Gold, 2019 Great American Beer Festival"]],
       fact:{t:"New Belgium", p:["Before the brewery, these 18 acres held a stockyard, an auto junkyard and even a circus training ground. New Belgium cleaned up the polluted site and raised parts of it 10 feet to get out of the floodplain.","About 14 linear miles of wood from the old stockyard buildings now line the taproom walls. Fat Tire is named for the bike co-founder Jeff Lebesch rode through Belgium's beer country."]}},
+    { kind:"food", tags:[["Lunch","food"],["At New Belgium","opt"]], name:"Cecilia's Kitchen", noMap:true,
+      blurb:"Lunch from Cecilia's at New Belgium after the tour: global comfort food made with organic, local ingredients where possible.",
+      url:"https://www.ceciliaskitchen.com/our-menu", urlLabel:"Menu",
+      label:"Good orders",
+      picks:[["Traditional savory French crêpes","The dish Cecilia's is best known for"],
+             ["Empanadas","Hot & flaky: ground beef, chicken, spinach and more"]]},
     { kind:"bar", tags:[["If time allows","opt"]], name:"The Whale",
       blurb:"A West Asheville craft beer bar with 20 rotating taps and a deep bottle list.",
       url:"https://thewhalecollective.com/west-asheville-nc/",
@@ -658,7 +671,7 @@ DAYS.forEach(d => {
         if (s.fact) html += `<button class="btn" type="button" data-fact="${key}">Learn more</button>`;
         html += `<span class="links">`;
         if (s.url) html += `<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.urlLabel || "Website")} ↗</a>`;
-        if (s.kind !== "scenic" && s.kind !== "free") html += `<a href="${mapUrl(s.name.replace(/ — .*/, "").replace(/\(.*\)/, ""))}" target="_blank" rel="noopener">Map ↗</a>`;
+        if (s.kind !== "scenic" && s.kind !== "free" && !s.noMap) html += `<a href="${mapUrl(s.name.replace(/ — .*/, "").replace(/\(.*\)/, ""))}" target="_blank" rel="noopener">Map ↗</a>`;
         html += `</span>`;
         html += `</div>`;
       }
