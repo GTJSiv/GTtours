@@ -131,6 +131,7 @@ details:not([open]) .caret{transform:rotate(-90deg)}
 .tag{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;border-radius:6px;padding:2px 7px;background:var(--spruce-soft);color:var(--spruce)}
 .tag.res{background:var(--amber-soft);color:var(--amber)}
 .tag.food{background:var(--amber-soft);color:var(--leaf)}
+.tag.pay{background:transparent;border:1px solid var(--amber);color:var(--amber)}
 .tag.opt{background:transparent;border:1px solid var(--line);color:var(--muted)}
 .stop h3{margin:0;font-size:19px;line-height:1.25;text-wrap:balance}
 .blurb{margin:4px 0 0;color:var(--muted);font-size:14px}
@@ -166,7 +167,7 @@ details:not([open]) .caret{transform:rotate(-90deg)}
 .note.alert b{color:var(--leaf);letter-spacing:.03em}
 .req{margin-top:10px;font-size:13px;background:var(--spruce-soft);color:var(--spruce);border-radius:8px;padding:6px 10px;font-weight:600}
 .actions{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:14px}
-.actions .links{display:flex;gap:14px;font-size:14px;font-weight:600}
+.actions .links{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:14px;font-weight:600}
 
 .checkout{margin-top:14px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;font-weight:600}
 footer{margin-top:40px;color:var(--muted);font-size:13px;text-align:center}
@@ -187,6 +188,7 @@ dialog::backdrop{background:rgba(10,20,20,.5)}
 dialog{overflow-y:auto;overscroll-behavior:contain}
 .fab{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:6;width:58px;height:58px;border-radius:50%;border:0;padding:0;display:grid;place-items:center;cursor:pointer;background:var(--band);color:var(--band-stamp);box-shadow:0 6px 18px rgba(10,30,30,.3),0 0 0 3px var(--bg)}
 .fab svg{width:28px;height:28px}
+.photo-tip{list-style:none;margin:4px 0 0 -18px;padding:8px 10px;border:1px solid var(--amber);border-radius:10px}
 .camchip{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--band);color:var(--band-stamp);vertical-align:-5px;margin-inline:1px}
 .camchip svg{width:14px;height:14px}
 @media (prefers-reduced-motion:no-preference){
@@ -277,11 +279,10 @@ dialog{overflow-y:auto;overscroll-behavior:contain}
         <li>Tastings that come <b>with a brewery tour</b> don't count toward your 2.</li>
         <li><b>Breakfast is on your own</b> every day.</li>
         <li><b>Lunch &amp; dinner:</b> order what looks good. Just be reasonable.</li>
-        <li><b>No open drinks on the street.</b> Finish your beer before you leave a brewery.</li>
-        <li>Asheville sits at about 2,100 feet. <b>Drink water</b> between beers.</li>
+        <li>This trip will be a bit of a marathon. <b>Drink Water</b> between beers.</li>
         <li>Expect highs in the 60s and nights in the 40s. Bring a layer.</li>
-        <li><b>Share your photos:</b> tap the <span class="camchip" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 8.5A2.5 2.5 0 0 1 6.5 6h1.6l1.2-1.8A1.5 1.5 0 0 1 10.5 3.5h3a1.5 1.5 0 0 1 1.2.7L15.9 6h1.6A2.5 2.5 0 0 1 20 8.5v8a2.5 2.5 0 0 1-2.5 2.5h-11A2.5 2.5 0 0 1 4 16.5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="12" cy="12.3" r="3.6" fill="none" stroke="currentColor" stroke-width="2"/></svg></span> camera button at the bottom right to add your pictures to our group album. After the trip we'll put everyone's photos together.</li>
         <li><b>Lost or running late?</b> Text a trip leader right away. Numbers are under Help &amp; contacts at the top.</li>
+        <li class="photo-tip"><b>Share your photos:</b> tap the <span class="camchip" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 8.5A2.5 2.5 0 0 1 6.5 6h1.6l1.2-1.8A1.5 1.5 0 0 1 10.5 3.5h3a1.5 1.5 0 0 1 1.2.7L15.9 6h1.6A2.5 2.5 0 0 1 20 8.5v8a2.5 2.5 0 0 1-2.5 2.5h-11A2.5 2.5 0 0 1 4 16.5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="12" cy="12.3" r="3.6" fill="none" stroke="currentColor" stroke-width="2"/></svg></span> camera button at the bottom right to add your pictures to our group album. After the trip we'll put everyone's photos together.</li>
       </ul>
     </details>
 
@@ -426,7 +427,7 @@ const DAYS = [
       bp:["<strong>Eats:</strong> <strong>The Fig &amp; Prosciutto</strong> or <strong>The Asheville</strong> (pepperoni and hot honey) as my pizza choice.",
           "<strong>Drinks:</strong> Multiple craft lagers on tap that will pair nicely with a spicy pie. The menu says Sierra Nevada Seasonal... Fingers crossed it's <b>Celebration Fresh Hop IPA</b>, my favorite all-time seasonal beer."],
       fact:{t:"Soprana", p:["Soprana sits on top of the Embassy Suites at 192 Haywood St, about a block from Hotel Indigo. It opened in spring 2024 and was selected for the MICHELIN Guide American South in 2025.","Grab a seat near the windows or out on the terrace. You'll be looking west toward the Blue Ridge."]}},
-    { time:"Late night", kind:"addon", tags:[["Optional add-on","opt"]], name:"One World Brewing (Downtown)",
+    { time:"Late night", kind:"addon", tags:[["Optional add-on","opt"],["Self-pay","pay"]], name:"One World Brewing (Downtown)",
       blurb:"A tiny underground brewery below Farm Burger at 10 Patton Ave. Enter through the alley.",
       url:"https://oneworldbrewing.com/location/downtown/#info",
       picks:[["Whale of a Tale Pale Ale","The lighter flagship"],
@@ -486,14 +487,14 @@ const DAYS = [
           "I have no idea how I am going to decide. So I say we just share plates.",
           "And they have the legendary <b>Westbrook Mexican Chocolate Cake</b> and <b>TRVE Black IPA</b> on tap :P"],
       fact:{t:"Tupelo Honey", p:["Tupelo Honey opened right here in downtown Asheville on December 7, 2000. It began as a late-night spot for locals and was one of the city's earliest farm-to-table restaurants.","It has since grown into a chain across the South and beyond, but this is where it started."]}},
-    { time:"Late night", kind:"addon", tags:[["Optional add-on","opt"],["Closes 9 pm","opt"]], name:"DSSOLVR",
+    { time:"Late night", kind:"addon", tags:[["Optional add-on","opt"],["Self-pay","pay"],["Closes 9 pm","opt"]], name:"DSSOLVR",
       blurb:"Hazy IPAs, fruited sours and odd-named experiments downtown. Get there early since it closes at 9.",
       url:"https://dssolvr.com/location/avl-taproom/",
       picks:[["Thank You For Existing","Kölsch and their most-ordered beer, the light pick"],
              ["Reapers & Creepers","Hazy IPA, their specialty and a fan favorite"],
              ["Uppercuts & Laser Tag","Another top-rated hazy IPA"]],
       fact:{t:"DSSOLVR", p:["Say it \"dissolver.\" The name refers to the three owners blending their brewing backgrounds into one business. Their tagline is \"Brewed until Surreal.\"","Beer names often carry a story. \"We Don't Sell Those Here\" is named for a wine seller in Savannah who wouldn't sell them a corkscrew."]}},
-    { time:"Late night", kind:"addon", tags:[["Or instead","opt"],["Open till 10 pm","opt"]], name:"Pack's Tavern",
+    { time:"Late night", kind:"addon", tags:[["Or instead","opt"],["Self-pay","pay"],["Open till 10 pm","opt"]], name:"Pack's Tavern",
       blurb:"Big local tap list in a historic building on Pack Square. Good if DSSOLVR has closed.",
       url:"https://packstavern.com/",
       label:"Order tip",
@@ -507,8 +508,8 @@ const DAYS = [
       blurb:"Late October is prime leaf season around Asheville. Overlooks are cooler and windier than town.",
       url:"https://www.nps.gov/blri/planyourvisit/roadclosures.htm", urlLabel:"Road status",
       fact:{t:"The Parkway", p:["The Blue Ridge Parkway runs 469 miles from Virginia's Shenandoah National Park to the Great Smokies. Asheville sits near milepost 382, and the mileposts count up as you head south.","Its highest point is Richland Balsam Overlook, at 6,053 feet near milepost 431. Some sections can close after storms, so the road-status link is worth a look that morning."]}},
-    { kind:"brew", tags:[["Lagers"]], name:"Brevard Brewing Co.",
-      blurb:"A small downtown Brevard taproom focused on German-style lagers.",
+    { time:"11 am–noon", kind:"brew", tags:[["Meet the brewer","res"],["Lagers"]], name:"Brevard Brewing Co.",
+      blurb:"A small downtown Brevard taproom focused on German-style lagers. We'll get to meet owner and brewer Kyle Williams.",
       url:"https://www.brevard-brewing.com/",
       picks:[["Bohemian Pilsner","The flagship, with Czech and German noble hops"],
              ["American IPA","The hoppy option"],
@@ -517,7 +518,7 @@ const DAYS = [
           "<strong>ALSO NOTE:</strong> I found that The District (where Brevard Brewing resides) is a 6-block radius where you can walk around with an open container purchased at the brewery. Not sure if there will be an opportunity, but something to keep in mind.",
           "<a href=\"https://www.cityofbrevard.com/DocumentCenter/View/5103/Social-District-Guide--FAQs\" target=\"_blank\" rel=\"noopener\">Details on the Social District here ↗</a>"],
       fact:{t:"White squirrels", p:["Brevard is famous for its white squirrels. Local legend says they arrived in 1949 after a carnival truck overturned. The town celebrates them every May with White Squirrel Weekend, so keep an eye on the trees.","Brevard Brewing opened in 2012 as Western North Carolina's lager specialist. Lagers ferment cold and age more than twice as long as most ales, which is why few small breweries focus on them."]}},
-    { kind:"food", tags:[["Lunch","food"]], name:"Hawg Wild Smokehouse",
+    { time:"12:15–1:15 pm", kind:"food", tags:[["Lunch","food"],["Leave by 1:15 pm","opt"]], name:"Hawg Wild Smokehouse",
       blurb:"Barbecue just outside Brevard, in Pisgah Forest.",
       url:"https://hawgbbq.com/pisgah-forest-hawg-wild-smokehouse-and-taproom-food-menu", urlLabel:"Menu",
       label:"Good orders",
@@ -534,7 +535,8 @@ const DAYS = [
              ["Pale Ale","The 1980 classic that helped start American craft beer","1st at '83 GABF, MANY medals since"],
              ["Celebration Fresh Hop IPA","Their beloved seasonal IPA since 1981, brewed with hops fresh off the vine"]],
       bp:["<b>Sierra Nevada Pale Ale</b> is my gateway. I tried one many years ago and it opened my little baby eyes to hops and the fact that beer was more than fizzy yellow water. It is the beer I will stock my garage with before the apocalypse.",
-          "AND I will have a previously mentioned banger: <b>Sierra Nevada Celebration</b>."],
+          "AND I will absolutely have a fresh previously mentioned seasonal banger: <b>Sierra Nevada Celebration</b>.",
+          "<strong>Insider bottle:</strong> I get emails from Sierra Nevada and got one recently about <b>Trip in the Woods Bière de Garde</b>. This would be a great special bottle to split. Definitely one I want to try."],
       fact:{t:"Sierra Nevada", p:["Sierra Nevada has won 33 Great American Beer Festival medals, tied for the most of any brewery. This was the first production brewery ever to earn LEED Platinum certification, and its 20-barrel pilot brewhouse in the taproom makes beers you can only get here.","Ask about Celly Drippins. It's made from the drippings of the hop bags used for Celebration, and for years it was a secret tap at this taproom. Celebration season starts in the fall, so you might get lucky."]}},
     { kind:"brew", tags:[["River Arts District"]], name:"Wedge Brewery at Foundation",
       blurb:"An easygoing outdoor hangout beside the railroad tracks.",
@@ -543,7 +545,7 @@ const DAYS = [
              ["Iron Rail IPA","English-style IPA and their best seller","Mountain Xpress IPA of the Year, 7 years running"],
              ["Community Porter","English-style porter with carob and maple"]],
       fact:{t:"Wedge at Foundation", p:["The building went up in 1898 for Hans Rees & Sons, which grew into the largest leather tannery in the country.","Trains still run right past the patio. Wedge was also the River Arts District's first brewery when its original location opened. In the fall, ask if their Märzen is still pouring. It's a gold-medal Oktoberfest lager."]}},
-    { time:"Evening", kind:"free", tags:[["Free time","opt"]], name:"Evening on your own",
+    { time:"Evening", kind:"free", tags:[["Free time","opt"],["Self-pay","pay"]], name:"Evening on your own",
       blurb:"Dinner and drinks are on your own tonight. Here are some ideas, starting with spots near our last stop. Hours shown are for Wednesday.",
       ideas:[
         ["Near Wedge at Foundation (River Arts District)", [
@@ -555,7 +557,9 @@ const DAYS = [
           ["Battery Park Book Exchange & Champagne Bar","A used bookstore with a champagne and wine bar tucked inside the 1929 Grove Arcade, a block from the hotel. Grab a glass and get lost in the stacks.","https://www.google.com/maps/search/?api=1&query=Battery+Park+Book+Exchange+1+Page+Ave+Asheville+NC","Noon–8 pm"],
           ["Asheville Pizza & Brewing (Merrimon Ave)","Pizza, house beer and $3 movies you can watch with your beer. A short ride north.","https://www.ashevillebrewing.com/movies/","11:30 am–9 pm"],
           ["DSSOLVR","If you skipped Tuesday's late-night add-on, here's your second chance.","https://www.google.com/maps/search/?api=1&query=DSSOLVR+63+N+Lexington+Ave+Asheville+NC","3–9 pm"],
-          ["Pack's Tavern","Big local tap list and pub food on Pack Square.","https://www.google.com/maps/search/?api=1&query=Pack%27s+Tavern+Asheville+NC","11:30 am–10 pm"]
+          ["Pack's Tavern","Big local tap list and pub food on Pack Square.","https://www.google.com/maps/search/?api=1&query=Pack%27s+Tavern+Asheville+NC","11:30 am–10 pm"],
+          ["Wildwood Still","Rooftop whiskey bar at 61 Biltmore Ave with 150+ whiskeys and bourbons, craft cocktails and Asian-inspired plates. Reservations recommended.","https://www.wildwoodstill.com/","4–11 pm"],
+          ["Ben's Tune Up","Asheville's only sake brewery, plus a beer garden and Asian-fusion kitchen in a former South Slope auto shop. Its listing shows it closed Wednesdays, so check before heading over.","https://www.benstuneup.com/","Check hours"]
         ]]
       ]}
    ]},
@@ -570,13 +574,13 @@ const DAYS = [
              ["The Ella","Egg, fresh mozzarella, tomato and basil pesto on ciabatta"],
              ["Fig & Brie Panini","A sweet-and-savory vegetarian pick"]]},
     { time:"12:15 pm", kind:"brew", tags:[["Tour reserved","res"],["Open noon–8 pm · food trucks","opt"]], name:"New Belgium — Asheville",
-      blurb:"The Fat Tire brewery's East Coast home on the French Broad River.",
+      blurb:"The Fat Tire brewery's East Coast home on the French Broad River. The tour runs about 2 to 2.5 hours.",
       url:"https://www.newbelgium.com/visit/asheville/",
       req:true,
       picks:[["Fat Tire & Voodoo Ranger","The amber that built the company and the current #1 craft beer brand in the country"],
              ["La Folie","Sour brown ale aged in French oak foeders, their specialty","Gold, 2019 Great American Beer Festival"]],
       fact:{t:"New Belgium", p:["Before the brewery, these 18 acres held a stockyard, an auto junkyard and even a circus training ground. New Belgium cleaned up the polluted site and raised parts of it 10 feet to get out of the floodplain.","About 14 linear miles of wood from the old stockyard buildings now line the taproom walls. Fat Tire is named for the bike co-founder Jeff Lebesch rode through Belgium's beer country."]}},
-    { kind:"food", tags:[["Lunch","food"],["At New Belgium","opt"]], name:"Cecilia's Kitchen", noMap:true,
+    { time:"2:45 pm", kind:"food", tags:[["Lunch","food"],["At New Belgium","opt"]], name:"Cecilia's Kitchen", noMap:true,
       blurb:"Lunch from Cecilia's at New Belgium after the tour: global comfort food made with organic, local ingredients where possible.",
       url:"https://www.ceciliaskitchen.com/our-menu", urlLabel:"Menu",
       label:"Good orders",
@@ -604,7 +608,8 @@ const DAYS = [
              ["Little Ember","Irish extra stout poured from a beer engine"]],
       fact:{t:"Leveller", p:["The name comes from the Levellers, a 17th-century English movement that argued for equality, popular sovereignty and land held in common.","Little Ember is built for a beer engine, a hand pump that pulls beer up from the cellar the old British way, which gives it a soft, velvety pour."]}},
     { kind:"brew", tags:[["Dinner & beers","res"]], name:"Zillicoah Beer Company",
-      blurb:"Open-fermented lagers and farmhouse ales on the bank of the French Broad River. A great last night.",
+      blurb:"Open-fermented lagers and farmhouse ales on the bank of the French Broad River. Dinner is from their resident food truck, Master BBQ. A great last night.",
+      links:[["Food truck menu","https://masterbbqusa.com/food-truck-menu/"]],
       url:"https://www.zillicoahbeer.com/",
       picks:[["Kellerpils","Their most popular beer: hop-forward, crisp and dry"],
              ["Zillicoah IPA","The hoppy option"],
@@ -671,6 +676,7 @@ DAYS.forEach(d => {
         if (s.fact) html += `<button class="btn" type="button" data-fact="${key}">Learn more</button>`;
         html += `<span class="links">`;
         if (s.url) html += `<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.urlLabel || "Website")} ↗</a>`;
+        (s.links || []).forEach(([l, u]) => { html += `<a href="${esc(u)}" target="_blank" rel="noopener">${esc(l)} ↗</a>`; });
         if (s.kind !== "scenic" && s.kind !== "free" && !s.noMap) html += `<a href="${mapUrl(s.name.replace(/ — .*/, "").replace(/\(.*\)/, ""))}" target="_blank" rel="noopener">Map ↗</a>`;
         html += `</span>`;
         html += `</div>`;
